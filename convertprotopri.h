@@ -27,6 +27,7 @@ private:
     void loadSrcFile(const QString srcFilePath);
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
+    QString convertPWDPath(const QString lineContent);
     QString getSpecifiedLineContent(const int index);
     int getFirstKeyWordLineNumber(const QString filePath, const QString keyword);
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);
