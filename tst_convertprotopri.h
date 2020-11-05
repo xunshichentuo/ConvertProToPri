@@ -18,6 +18,7 @@ public:
     int expectSourceFileLineNumber = 638;
     int expectHEADERSLinePosition = 26;
     int expectSOURCESLinePosition = 300;
+    int expectDISTFILESLinePosition = 603;
 };
 
 TEST_F(TestConvertProToPri, testFirstLine)
@@ -39,4 +40,9 @@ TEST_F(TestConvertProToPri, countProFileHEADERSLineNumber)
 TEST_F(TestConvertProToPri, countProFileSOURCESLineNumber)
 {
     ASSERT_THAT(converter.getSrcFileSOURCESLineNumber(srcFilePath), Eq(expectSOURCESLinePosition));
+}
+
+TEST_F(TestConvertProToPri, countProFileDISTFILESLineNumber)
+{
+    ASSERT_THAT(converter.getSrcFileDISTFILESLineNumber(srcFilePath), Eq(expectDISTFILESLinePosition));
 }
