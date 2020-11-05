@@ -14,7 +14,7 @@ public:
 
     QString convertFile();
     QString convertOneLine(const int index);
-
+    bool needConvert(const int index);
     QString readOneLineFromSourceFile(const QString srcPath);
     int getSourceFileLineNumber(const QString srcPath);
     int getLineNumberOfHEADERS(const QString srcPath);

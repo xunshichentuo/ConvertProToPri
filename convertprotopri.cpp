@@ -33,6 +33,11 @@ QString ConvertProToPri::convertOneLine(const int index)
     return convertLineData;
 }
 
+bool ConvertProToPri::needConvert(const int index)
+{
+    return false;
+}
+
 QString ConvertProToPri::readOneLineFromSourceFile(const QString srcPath)
 {
     QFile proFile(srcPath);

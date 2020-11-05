@@ -35,6 +35,11 @@ TEST_F(TestConvertProToPri, testFirstLine)
     ASSERT_THAT(converter->convertOneLine(1), Eq(firstLine));
 }
 
+TEST_F(TestConvertProToPri, requiredConversionUnderSpecifiedLineNumber)
+{
+    EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));
+}
+
 TEST_F(TestConvertProToPri, countProFileLineNumber)
 {
     ASSERT_THAT(converter->getSourceFileLineNumber(srcFilePath), Eq(expectSourceFileLineNumber));
