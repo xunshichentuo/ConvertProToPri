@@ -26,7 +26,8 @@ QString ConvertProToPri::convertOneLine(const QString srcFilePath, const int ind
     if(!isValidIndex(index)) return "";
 
     QString rawLineData = getSpecifiedLineContent(index);
-    return rawLineData.replace("$$PWD", "$$PWD/Moonray");
+    if(rawLineData.contains("$$PWD")) rawLineData.replace("$$PWD", "$$PWD/Moonray");
+    return rawLineData;
 }
 
 QString ConvertProToPri::readOneLineFromSourceFile(const QString srcPath)
@@ -101,7 +102,12 @@ bool ConvertProToPri::isOpenSrcFile()
 
 bool ConvertProToPri::isValidIndex(const int index)
 {
-    return (index >=0);
+    if(index >=0) {
+        return true;
+    } else {
+        qDebug()<<"ConvertProToPri::isValidIndex error index:"<<index;
+        return false;
+    }
 }
 
 QString ConvertProToPri::getSpecifiedLineContent(const int index)
