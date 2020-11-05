@@ -15,6 +15,9 @@ class TestConvertProToPri : public Test {
 public:
     ConvertProToPri converter;
     QString srcFilePath = "/home/chen/Documents/qtProject/ConvertProToPri/rayware.pro";
+    int expectSourceFileLineNumber = 638;
+    int expectHEADERSLinePosition = 26;
+    int expectSOURCESLinePosition = 300;
 };
 
 TEST_F(TestConvertProToPri, testFirstLine)
@@ -25,15 +28,15 @@ TEST_F(TestConvertProToPri, testFirstLine)
 
 TEST_F(TestConvertProToPri, countProFileLineNumber)
 {
-    ASSERT_THAT(converter.getSourceFileLineNumber(srcFilePath), Eq(638));
+    ASSERT_THAT(converter.getSourceFileLineNumber(srcFilePath), Eq(expectSourceFileLineNumber));
 }
 
 TEST_F(TestConvertProToPri, countProFileHEADERSLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileHEADERSLineNumber(srcFilePath), Eq(26));
+    ASSERT_THAT(converter.getSrcFileHEADERSLineNumber(srcFilePath), Eq(expectHEADERSLinePosition));
 }
 
 TEST_F(TestConvertProToPri, countProFileSOURCESLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileSOURCESLineNumber(srcFilePath), Eq(300));
+    ASSERT_THAT(converter.getSrcFileSOURCESLineNumber(srcFilePath), Eq(expectSOURCESLinePosition));
 }
