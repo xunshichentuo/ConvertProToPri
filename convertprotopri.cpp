@@ -34,22 +34,22 @@ int ConvertProToPri::getSourceFileLineNumber(const QString srcPath)
     return count;
 }
 
-int ConvertProToPri::getSrcFileHEADERSLineNumber(const QString srcPath)
+int ConvertProToPri::getLineNumberOfHEADERS(const QString srcPath)
 {
     return getFirstKeyWordLineNumber(srcPath, "HEADERS");
 }
 
-int ConvertProToPri::getSrcFileSOURCESLineNumber(const QString srcPath)
+int ConvertProToPri::getLineNumberOfSOURCES(const QString srcPath)
 {
     return getFirstKeyWordLineNumber(srcPath, "SOURCES");
 }
 
-int ConvertProToPri::getSrcFileDISTFILESLineNumber(const QString srcPath)
+int ConvertProToPri::getLineNumberOfDISTFILES(const QString srcPath)
 {
     return getFirstKeyWordLineNumber(srcPath, "DISTFILES");
 }
 
-int ConvertProToPri::getSrcFileRESOURCESLineNumber(const QString srcPath)
+int ConvertProToPri::getLineNumberOfRESOURCES(const QString srcPath)
 {
     return getFirstKeyWordLineNumber(srcPath, "RESOURCES");
 }

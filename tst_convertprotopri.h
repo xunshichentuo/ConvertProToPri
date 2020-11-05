@@ -35,20 +35,20 @@ TEST_F(TestConvertProToPri, countProFileLineNumber)
 
 TEST_F(TestConvertProToPri, countProFileHEADERSLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileHEADERSLineNumber(srcFilePath), Eq(expectHEADERSLinePosition));
+    ASSERT_THAT(converter.getLineNumberOfHEADERS(srcFilePath), Eq(expectHEADERSLinePosition));
 }
 
 TEST_F(TestConvertProToPri, countProFileSOURCESLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileSOURCESLineNumber(srcFilePath), Eq(expectSOURCESLinePosition));
+    ASSERT_THAT(converter.getLineNumberOfSOURCES(srcFilePath), Eq(expectSOURCESLinePosition));
 }
 
 TEST_F(TestConvertProToPri, countProFileDISTFILESLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileDISTFILESLineNumber(srcFilePath), Eq(expectDISTFILESLinePosition));
+    ASSERT_THAT(converter.getLineNumberOfDISTFILES(srcFilePath), Eq(expectDISTFILESLinePosition));
 }
 
 TEST_F(TestConvertProToPri, countProFileRESOURCESLineNumber)
 {
-    ASSERT_THAT(converter.getSrcFileRESOURCESLineNumber(srcFilePath), Eq(expectRESOURCESLinePosition));
+    ASSERT_THAT(converter.getLineNumberOfRESOURCES(srcFilePath), Eq(expectRESOURCESLinePosition));
 }
