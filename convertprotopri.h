@@ -15,6 +15,7 @@ public:
     int getSrcFileHEADERSLineNumber(const QString srcPath);
     int getSrcFileSOURCESLineNumber(const QString srcPath);
     int getSrcFileDISTFILESLineNumber(const QString srcPath);
+    int getSrcFileRESOURCESLineNumber(const QString srcPath);
 private:
     int getFirstKeyWordLineNumber(const QString filePath, const QString keyword);
 signals:

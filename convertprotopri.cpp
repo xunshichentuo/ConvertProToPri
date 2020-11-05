@@ -49,6 +49,11 @@ int ConvertProToPri::getSrcFileDISTFILESLineNumber(const QString srcPath)
     return getFirstKeyWordLineNumber(srcPath, "DISTFILES");
 }
 
+int ConvertProToPri::getSrcFileRESOURCESLineNumber(const QString srcPath)
+{
+    return 0;
+}
+
 int ConvertProToPri::getFirstKeyWordLineNumber(const QString filePath, const QString keyword)
 {
     QFile proFile(filePath);
