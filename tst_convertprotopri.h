@@ -64,3 +64,9 @@ TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLISTLine)
     QString expectQMAKE_INFO_PLISTResult = "QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n";
     ASSERT_THAT(converter.convertQMAKEINFOPLIST(srcFilePath), Eq(expectQMAKE_INFO_PLISTResult));
 }
+
+TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLISTRow)
+{
+    QString expectQMAKE_INFO_PLISTResult = "QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n";
+    ASSERT_THAT(converter.convertOneLine(srcFilePath, expectQMAKE_INFO_PLISTLinePosition), expectQMAKE_INFO_PLISTResult);
+}

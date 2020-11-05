@@ -12,6 +12,7 @@ public:
     explicit ConvertProToPri(QObject *parent = nullptr);
 
     QString convertFile(const QString srcFilePath);
+    QString convertOneLine(const QString srcFilePath, const int index);
 
     QString readOneLineFromSourceFile(const QString srcPath);
     int getSourceFileLineNumber(const QString srcPath);
@@ -22,6 +23,10 @@ public:
     int getLineNumberOfQMAKEINFOPLIST(const QString srcPath);
     QString convertQMAKEINFOPLIST(const QString srcPath);
 private:
+    void loadSrcFile(const QString srcFilePath);
+    bool isOpenSrcFile();
+    bool isValidIndex(const int index);
+    QString getSpecifiedLineContent(const int index);
     int getFirstKeyWordLineNumber(const QString filePath, const QString keyword);
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);
 signals:

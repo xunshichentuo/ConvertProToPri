@@ -12,13 +12,21 @@ ConvertProToPri::ConvertProToPri(QObject *parent) : QObject(parent)
 
 QString ConvertProToPri::convertFile(const QString srcFilePath)
 {
-    this->srcFile.setFileName(srcFilePath);
-    if(!this->srcFile.open(QIODevice::ReadWrite)) {
-        qDebug()<<"pro file open failed:"<<srcFilePath;
-        return "";
-    }
+    loadSrcFile(srcFilePath);
+    if(!isOpenSrcFile()) return "";
 
     return srcFile.readLine();
+}
+
+QString ConvertProToPri::convertOneLine(const QString srcFilePath, const int index)
+{
+    loadSrcFile(srcFilePath);
+    if(!isOpenSrcFile()) return "";
+
+    if(!isValidIndex(index)) return "";
+
+    QString rawLineData = getSpecifiedLineContent(index);
+    return rawLineData.replace("$$PWD", "$$PWD/Moonray");
 }
 
 QString ConvertProToPri::readOneLineFromSourceFile(const QString srcPath)
@@ -78,6 +86,32 @@ int ConvertProToPri::getLineNumberOfQMAKEINFOPLIST(const QString srcPath)
 QString ConvertProToPri::convertQMAKEINFOPLIST(const QString srcPath)
 {
     return getFirstKeyWordLineData(srcPath, "QMAKE_INFO_PLIST");
+}
+
+void ConvertProToPri::loadSrcFile(const QString srcFilePath)
+{
+    this->srcFile.setFileName(srcFilePath);
+    this->srcFile.open(QIODevice::ReadOnly);
+}
+
+bool ConvertProToPri::isOpenSrcFile()
+{
+    return this->srcFile.isOpen();
+}
+
+bool ConvertProToPri::isValidIndex(const int index)
+{
+    return (index >=0);
+}
+
+QString ConvertProToPri::getSpecifiedLineContent(const int index)
+{
+    QString matchedLine = "";
+    this->srcFile.seek(0);
+    for(int i=0;i<index;i++) {
+        matchedLine = this->srcFile.readLine();
+    }
+    return matchedLine;
 }
 
 int ConvertProToPri::getFirstKeyWordLineNumber(const QString filePath, const QString keyword)
