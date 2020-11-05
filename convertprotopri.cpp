@@ -36,27 +36,19 @@ int ConvertProToPri::getSourceFileLineNumber(const QString srcPath)
 
 int ConvertProToPri::getSrcFileHEADERSLineNumber(const QString srcPath)
 {
-    QFile proFile(srcPath);
-    if(!proFile.open(QIODevice::ReadWrite)) {
-        qDebug()<<"pro file open failed:"<<srcPath;
-        return 0;
-    }
-
-    int count = 0;
-    while(!proFile.atEnd()) {
-        QString line = proFile.readLine();
-        count++;
-        if(line.contains("HEADERS"))
-            break;
-    }
-    return count;
+    return getFirstKeyWordLineNumber(srcPath, "HEADERS");
 }
 
 int ConvertProToPri::getSrcFileSOURCESLineNumber(const QString srcPath)
 {
-    QFile proFile(srcPath);
+    return getFirstKeyWordLineNumber(srcPath, "SOURCES");
+}
+
+int ConvertProToPri::getFirstKeyWordLineNumber(const QString filePath, const QString keyword)
+{
+    QFile proFile(filePath);
     if(!proFile.open(QIODevice::ReadWrite)) {
-        qDebug()<<"pro file open failed:"<<srcPath;
+        qDebug()<<"pro file open failed:"<<filePath;
         return 0;
     }
 
@@ -64,7 +56,7 @@ int ConvertProToPri::getSrcFileSOURCESLineNumber(const QString srcPath)
     while(!proFile.atEnd()) {
         QString line = proFile.readLine();
         count++;
-        if(line.contains("SOURCES"))
+        if(line.contains(keyword))
             break;
     }
     return count;
