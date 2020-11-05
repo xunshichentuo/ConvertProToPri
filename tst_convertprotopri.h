@@ -20,6 +20,7 @@ public:
     int expectSOURCESLinePosition = 300;
     int expectDISTFILESLinePosition = 603;
     int expectRESOURCESLinePosition = 632;
+    int expectQMAKE_INFO_PLISTLinePosition = 20;
 };
 
 TEST_F(TestConvertProToPri, testFirstLine)
@@ -51,4 +52,15 @@ TEST_F(TestConvertProToPri, countProFileDISTFILESLineNumber)
 TEST_F(TestConvertProToPri, countProFileRESOURCESLineNumber)
 {
     ASSERT_THAT(converter.getLineNumberOfRESOURCES(srcFilePath), Eq(expectRESOURCESLinePosition));
+}
+
+TEST_F(TestConvertProToPri, countProFileQMAKE_INFO_PLISTLineNumber)
+{
+    ASSERT_THAT(converter.getLineNumberOfQMAKEINFOPLIST(srcFilePath), Eq(expectQMAKE_INFO_PLISTLinePosition));
+}
+
+TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLISTLine)
+{
+    QString expectQMAKE_INFO_PLISTResult = "QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n";
+    ASSERT_THAT(converter.convertQMAKEINFOPLIST(srcFilePath), Eq(expectQMAKE_INFO_PLISTResult));
 }
