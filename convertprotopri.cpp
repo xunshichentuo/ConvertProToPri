@@ -10,17 +10,20 @@ ConvertProToPri::ConvertProToPri(QObject *parent) : QObject(parent)
     keywordList.append("QMAKE_INFO_PLIST");
 }
 
-QString ConvertProToPri::convertFile(const QString srcFilePath)
+ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : QObject(parent)
 {
     loadSrcFile(srcFilePath);
+}
+
+QString ConvertProToPri::convertFile()
+{
     if(!isOpenSrcFile()) return "";
 
     return srcFile.readLine();
 }
 
-QString ConvertProToPri::convertOneLine(const QString srcFilePath, const int index)
+QString ConvertProToPri::convertOneLine(const int index)
 {
-    loadSrcFile(srcFilePath);
     if(!isOpenSrcFile()) return "";
 
     if(!isValidIndex(index)) return "";

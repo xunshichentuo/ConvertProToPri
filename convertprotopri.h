@@ -10,9 +10,10 @@ class ConvertProToPri : public QObject
     Q_OBJECT
 public:
     explicit ConvertProToPri(QObject *parent = nullptr);
+    explicit ConvertProToPri(const QString srcFilePath, QObject *parent = nullptr);
 
-    QString convertFile(const QString srcFilePath);
-    QString convertOneLine(const QString srcFilePath, const int index);
+    QString convertFile();
+    QString convertOneLine(const int index);
 
     QString readOneLineFromSourceFile(const QString srcPath);
     int getSourceFileLineNumber(const QString srcPath);
