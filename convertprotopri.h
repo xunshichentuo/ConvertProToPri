@@ -28,6 +28,8 @@ private:
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
     QString convertPWDPath(const QString lineContent);
+    void moveToFileHead();
+    void moveToSpecifiedLine(const int index);
     QString getSpecifiedLineContent(const int index);
     int getFirstKeyWordLineNumber(const QString filePath, const QString keyword);
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);

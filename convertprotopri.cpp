@@ -13,19 +13,18 @@ ConvertProToPri::ConvertProToPri(QObject *parent) : QObject(parent)
 ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : QObject(parent)
 {
     loadSrcFile(srcFilePath);
+    moveToFileHead();
 }
 
 QString ConvertProToPri::convertFile()
 {
     if(!isOpenSrcFile()) return "";
-
     return srcFile.readLine();
 }
 
 QString ConvertProToPri::convertOneLine(const int index)
 {
     if(!isOpenSrcFile()) return "";
-
     if(!isValidIndex(index)) return "";
 
     QString rawLineData = getSpecifiedLineContent(index);
@@ -128,13 +127,25 @@ QString ConvertProToPri::convertPWDPath(const QString lineContent)
     return convertedLine;
 }
 
+void ConvertProToPri::moveToFileHead()
+{
+    this->srcFile.seek(0);
+}
+
+void ConvertProToPri::moveToSpecifiedLine(const int index)
+{
+    if(index - 1 <0) return;
+    for(int i=0;i<index-1;i++) {
+        this->srcFile.readLine();
+    }
+}
+
 QString ConvertProToPri::getSpecifiedLineContent(const int index)
 {
     QString matchedLine = "";
-    this->srcFile.seek(0);
-    for(int i=0;i<index;i++) {
-        matchedLine = this->srcFile.readLine();
-    }
+    moveToFileHead();
+    moveToSpecifiedLine(index);
+    matchedLine = this->srcFile.readLine();
     return matchedLine;
 }
 
