@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/covertFiles">
+        <file>rayware.pri</file>
+        <file>rayware.pro</file>
+    </qresource>
+</RCC>

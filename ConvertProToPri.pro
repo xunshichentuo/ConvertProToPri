@@ -4,8 +4,13 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG += thread
-CONFIG -= qt
 
-HEADERS +=     tst_aaa.h
+HEADERS +=     \
+    convertprotopri.h \
+    tst_convertprotopri.h
 
-SOURCES +=     main.cpp
+SOURCES +=     main.cpp \
+    convertprotopri.cpp
+
+RESOURCES += \
+    res.qrc
