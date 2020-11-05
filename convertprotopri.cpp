@@ -46,7 +46,7 @@ int ConvertProToPri::getSrcFileSOURCESLineNumber(const QString srcPath)
 
 int ConvertProToPri::getSrcFileDISTFILESLineNumber(const QString srcPath)
 {
-    return 0;
+    return getFirstKeyWordLineNumber(srcPath, "DISTFILES");
 }
 
 int ConvertProToPri::getFirstKeyWordLineNumber(const QString filePath, const QString keyword)
