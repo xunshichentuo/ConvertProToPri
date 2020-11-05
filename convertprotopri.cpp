@@ -10,6 +10,17 @@ ConvertProToPri::ConvertProToPri(QObject *parent) : QObject(parent)
     keywordList.append("QMAKE_INFO_PLIST");
 }
 
+QString ConvertProToPri::convertFile(const QString srcFilePath)
+{
+    this->srcFile.setFileName(srcFilePath);
+    if(!this->srcFile.open(QIODevice::ReadWrite)) {
+        qDebug()<<"pro file open failed:"<<srcFilePath;
+        return "";
+    }
+
+    return srcFile.readLine();
+}
+
 QString ConvertProToPri::readOneLineFromSourceFile(const QString srcPath)
 {
     QFile proFile(srcPath);

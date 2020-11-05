@@ -26,7 +26,7 @@ public:
 TEST_F(TestConvertProToPri, testFirstLine)
 {
     QString firstLine = QString("QT += qml quick opengl serialport testlib xml websockets network\r\n");
-    ASSERT_THAT(converter.readOneLineFromSourceFile(srcFilePath), Eq(firstLine));
+    ASSERT_THAT(converter.convertFile(srcFilePath), Eq(firstLine));
 }
 
 TEST_F(TestConvertProToPri, countProFileLineNumber)

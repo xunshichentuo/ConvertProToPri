@@ -10,6 +10,9 @@ class ConvertProToPri : public QObject
     Q_OBJECT
 public:
     explicit ConvertProToPri(QObject *parent = nullptr);
+
+    QString convertFile(const QString srcFilePath);
+
     QString readOneLineFromSourceFile(const QString srcPath);
     int getSourceFileLineNumber(const QString srcPath);
     int getLineNumberOfHEADERS(const QString srcPath);
@@ -28,6 +31,7 @@ public slots:
 private:
     QString proFilePath;
     QList<QString> keywordList;
+    QFile srcFile;
 };
 
 #endif // CONVERTPROTOPRI_H
