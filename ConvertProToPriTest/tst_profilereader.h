@@ -14,11 +14,11 @@ public:
 
 TEST_F(TestProfileReader, testFirstTwoLineConfig)
 {
-    QString beforeConverted = QString("QT += qml quick opengl serialport testlib xml websockets network\r\nCONFIG += c++11");
-    QStringList expectedConverted;
-    expectedConverted.append(QString("QT += qml quick opengl serialport testlib xml websockets network\r\n"));
-    expectedConverted.append(QString("CONFIG += c++11"));
-    QStringList afterCovnerted = proFileReader.splitConfigFromData(beforeConverted);
-    ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
+    QString firstLine = QString("QT += qml quick opengl serialport testlib xml websockets network\r\n");
+    QString secondLine = QString("CONFIG += c++11");
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    QStringList afterCovnerted = proFileReader.splitConfigFromData();
+    ASSERT_THAT(afterCovnerted, Eq(QStringList(firstLine)));
 }
 

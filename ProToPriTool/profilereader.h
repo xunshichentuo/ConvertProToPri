@@ -10,10 +10,11 @@ class ProFileReader : public QObject
 public:
     explicit ProFileReader(QObject *parent = nullptr);
 
-    QStringList splitConfigFromData(const QString &data);
-signals:
+    void loadOneRowOfData(const QString &rowData);
+    QStringList splitConfigFromData();
 
-public slots:
+    QStringList tempStroageDataList;
+    QStringList configList;
 };
 
 #endif // PROFILEREADER_H

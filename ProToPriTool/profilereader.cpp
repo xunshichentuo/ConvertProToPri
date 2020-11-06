@@ -5,7 +5,15 @@ ProFileReader::ProFileReader(QObject *parent) : QObject(parent)
 
 }
 
-QStringList ProFileReader::splitConfigFromData(const QString &data)
+void ProFileReader::loadOneRowOfData(const QString &rowData)
 {
-    return QStringList("");
+    tempStroageDataList.append(rowData);
+}
+
+QStringList ProFileReader::splitConfigFromData()
+{
+    if(tempStroageDataList.length() < 1) return QStringList();
+    configList.append(tempStroageDataList.first());
+    tempStroageDataList.removeFirst();
+    return configList;
 }
