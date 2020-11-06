@@ -168,10 +168,11 @@ QStringList ConvertProToPri::getPathList(const QString &data)
 
 bool ConvertProToPri::libsConfigDontHasRungL(const QStringList &libConfig)
 {
-    if(libConfig.at(0).contains("LIBS") && !libConfig.at(1).contains("-L"))
+    if(libConfig.at(0).contains("LIBS") && !libConfig.at(1).contains("-L")) {
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
 bool ConvertProToPri::containsRungLPath(const QStringList &configData)
