@@ -35,6 +35,14 @@ TEST_F(TestConvertProToPri, testFirstLine)
     ASSERT_THAT(converter->convertOneLine(firstLine), Eq(firstLine));
 }
 
+TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLIST)
+{
+    QString beforeConverted = QString("QMAKE_INFO_PLIST = $$PWD/MacDeployment/Info.plist\r\n");
+    QString expectedConverted = QString("QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n");
+    QString afterCovnerted = converter->convertOneLine(beforeConverted);
+    ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
+}
+
 TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
 {
     EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));

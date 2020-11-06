@@ -14,7 +14,9 @@ ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : Q
 
 QString ConvertProToPri::convertOneLine(const QString &waitConverted)
 {
-    return "";
+    QString converted = waitConverted;
+    if(converted.contains("$$PWD")) converted.replace("$$PWD", "$$PWD/Moonray");
+    return converted;
 }
 
 QString ConvertProToPri::convertFile()
