@@ -9,11 +9,11 @@ CONFIG += thread
 HEADERS +=     \
     convertprotopri.h \
     tst_convertprotopri.h \
-    parseproconfig.h
+    ../ProToPriTool/parseproconfig.h
 
 SOURCES +=     main.cpp \
     convertprotopri.cpp \
-    parseproconfig.cpp
+    ../ProToPriTool/parseproconfig.cpp
 
 RESOURCES += \
     res.qrc

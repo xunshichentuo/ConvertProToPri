@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include "convertprotopri.h"
-#include "parseproconfig.h"
+#include "../ProToPriTool/parseproconfig.h"
 
 using namespace testing;
 
