@@ -32,6 +32,7 @@ private:
     QString convertPwdPath(const QString &lineContent);
 public:
     QStringList getPathList(const QString &data);
+    bool libsConfigDontHasRungL(const QStringList &libConfig);
 private:
     void moveToFileHead();
     void moveToSpecifiedLine(const int index);

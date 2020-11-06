@@ -152,14 +152,13 @@ QString ConvertProToPri::convertPwdPath(const QString &lineContent)
 QStringList ConvertProToPri::getPathList(const QString &data)
 {
     QStringList linesContent = data.trimmed().split("=");
-    if(linesContent.length() != 2) return QStringList("");
+    if(linesContent.length() != 2)
+        return QStringList("");
 
-    QString keyword = linesContent.at(0);
     QString parameters = linesContent.at(1);
     QStringList needConvertedPaths;
-    QString libsKeyword = QString("LIBS");
 
-    if(keyword.contains(libsKeyword) && !parameters.contains("-L"))
+    if(libsConfigDontHasRungL(linesContent))
         return needConvertedPaths;
 
     if(parameters.contains("-L")) {
@@ -171,6 +170,14 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     }
 
     return needConvertedPaths;
+}
+
+bool ConvertProToPri::libsConfigDontHasRungL(const QStringList &libConfig)
+{
+    if(libConfig.at(0).contains("LIBS") && !libConfig.at(1).contains("-L"))
+        return true;
+    else
+        return false;
 }
 
 void ConvertProToPri::moveToFileHead()
