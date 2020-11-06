@@ -14,20 +14,13 @@ QT_END_NAMESPACE
 
 class TestConvertProToPri : public Test {
 public:
-    QString srcFilePath = "/home/chen/Documents/qtProject/ConvertProToPri/rayware.pro";
     ConvertProToPri *converter;
     ParseProConfig parseProConfig;
-    int expectSourceFileLineNumber = 638;
-    int expectHEADERSLinePosition = 26;
-    int expectSOURCESLinePosition = 300;
-    int expectDISTFILESLinePosition = 603;
-    int expectRESOURCESLinePosition = 632;
-    int expectQMAKE_INFO_PLISTLinePosition = 20;
     void SetUp() override {
-        converter = new ConvertProToPri(srcFilePath);
+
     }
     void TearDown() override {
-        delete converter;
+
     }
 };
 
@@ -113,14 +106,4 @@ TEST_F(TestConvertProToPri, changeRC_ICONSConfig)
 
     QString afterConverted = parseProConfig.convertOneConfig(beforeConverted);
     ASSERT_THAT(afterConverted, Eq(expectedConverted));
-}
-
-TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
-{
-    EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));
-}
-
-TEST_F(TestConvertProToPri, DISABLED_countProFileLineNumber)
-{
-    ASSERT_THAT(converter->getSourceFileLineNumber(srcFilePath), Eq(expectSourceFileLineNumber));
 }
