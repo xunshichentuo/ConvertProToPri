@@ -25,7 +25,7 @@ QString ConvertProToPri::convertOneConfig(const QString &waitConverted)
 
 bool ConvertProToPri::isNeedConvert(const QString &waitConverted)
 {
-    for(QString keyword : keywordList) {
+    for(QString keyword : hasPathKeywords) {
         if(waitConverted.contains(keyword)) {
             return true;
         }
@@ -37,14 +37,16 @@ QString ConvertProToPri::addPwdHeadPathInPaths(const QString &waitConverted, QSt
 {
     QString converted = waitConverted;
     QString pwdHead = "$$PWD/Moonray/";
+
     for(QString path : pathList) {
         if(path.contains("$$PWD")) {
-            converted.replace("$$PWD", "$$PWD/Moonray");
+            QString replacePath = path;
+            replacePath.replace("$$PWD", "$$PWD/Moonray");
+            converted.replace(path, replacePath);
         } else {
             converted.replace(path, pwdHead+path);
         }
     }
-
     return converted;
 }
 
@@ -105,18 +107,18 @@ int ConvertProToPri::getSourceFileLineNumber(const QString srcPath)
 
 void ConvertProToPri::initKeyword()
 {
-    keywordList.clear();
-    keywordList.append("HEADERS");
-    keywordList.append("SOURCES");
-    keywordList.append("DISTFILES");
-    keywordList.append("RESOURCES");
-    keywordList.append("QMAKE_INFO_PLIST");
-    keywordList.append("LIBS");
-    keywordList.append("RC_ICONS");
-    keywordList.append("INCLUDEPATH");
-    keywordList.append("DEPENDPATH");
-    keywordList.append("RESOURCES");
-    keywordList.append("TRANSLATIONS");
+    hasPathKeywords.clear();
+    hasPathKeywords.append("HEADERS");
+    hasPathKeywords.append("SOURCES");
+    hasPathKeywords.append("DISTFILES");
+    hasPathKeywords.append("RESOURCES");
+    hasPathKeywords.append("QMAKE_INFO_PLIST");
+    hasPathKeywords.append("LIBS");
+    hasPathKeywords.append("RC_ICONS");
+    hasPathKeywords.append("INCLUDEPATH");
+    hasPathKeywords.append("DEPENDPATH");
+    hasPathKeywords.append("RESOURCES");
+    hasPathKeywords.append("TRANSLATIONS");
 }
 
 void ConvertProToPri::loadSrcFile(const QString srcFilePath)

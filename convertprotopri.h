@@ -40,7 +40,7 @@ private:
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);
 private:
     QString proFilePath;
-    QList<QString> keywordList;
+    QList<QString> hasPathKeywords;
     QFile srcFile;
 };
 
