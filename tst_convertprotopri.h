@@ -63,6 +63,34 @@ TEST_F(TestConvertProToPri, convertRESOURCESConfig)
 {
     QString beforeConverted = QString("RESOURCES += \\\r\nqml.qrc \\\r\n$$PWD/ExternalExecutables\r\n");
     QString expectedConverted = QString("RESOURCES += \\\r\n$$PWD/Moonray/qml.qrc \\\r\n$$PWD/Moonray/ExternalExecutables\r\n");
+
+    QString afterConverted = converter->convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
+
+TEST_F(TestConvertProToPri, convertTRANSLATIONSConfig)
+{
+    QString beforeConverted = QString("TRANSLATIONS += \\\r\nTranslations/lang_zh_CN.ts \\\r\nTranslations/lang_en_US.ts");
+    QString expectedConverted = QString("TRANSLATIONS += \\\r\n$$PWD/Moonray/Translations/lang_zh_CN.ts \\\r\n$$PWD/Moonray/Translations/lang_en_US.ts");
+
+    QString afterConverted = converter->convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
+
+TEST_F(TestConvertProToPri, convertSOURCESConfig)
+{
+    QString beforeConverted = QString("SOURCES += main.cpp \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\nActions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.cpp \\\r\n");
+    QString expectedConverted = QString("SOURCES += $$PWD/Moonray/main.cpp \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.cpp \\\r\n");
+
+    QString afterConverted = converter->convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
+
+TEST_F(TestConvertProToPri, dontChangedLIBSConfig)
+{
+    QString beforeConverted = QString("LIBS += -lopengl32\r\n");
+    QString expectedConverted = QString("LIBS += -lopengl32\r\n");
+
     QString afterConverted = converter->convertOneConfig(beforeConverted);
     ASSERT_THAT(afterConverted, Eq(expectedConverted));
 }
