@@ -12,6 +12,11 @@ ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : Q
     moveToFileHead();
 }
 
+QString ConvertProToPri::convertOneLine(const QString &waitConverted)
+{
+    return "";
+}
+
 QString ConvertProToPri::convertFile()
 {
     if(!isOpenSrcFile()) return "";

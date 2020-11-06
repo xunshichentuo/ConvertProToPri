@@ -32,7 +32,7 @@ public:
 TEST_F(TestConvertProToPri, testFirstLine)
 {
     QString firstLine = QString("QT += qml quick opengl serialport testlib xml websockets network\r\n");
-    ASSERT_THAT(converter->convertOneLine(1), Eq(firstLine));
+    ASSERT_THAT(converter->convertOneLine(firstLine), Eq(firstLine));
 }
 
 TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
@@ -40,7 +40,7 @@ TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
     EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));
 }
 
-TEST_F(TestConvertProToPri, countProFileLineNumber)
+TEST_F(TestConvertProToPri, DISABLED_countProFileLineNumber)
 {
     ASSERT_THAT(converter->getSourceFileLineNumber(srcFilePath), Eq(expectSourceFileLineNumber));
 }
