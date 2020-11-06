@@ -17,8 +17,16 @@ QString ConvertProToPri::convertOneLine(const QString &waitConverted)
     QString converted = waitConverted;
 
     if(isNeedConvert(waitConverted)) {
-        getPathList(waitConverted);
-        converted = convertPWDPath(waitConverted);
+        QStringList pathList = getPathList(waitConverted);
+
+        QString pwdHead = "$$PWD/Moonray/";
+        for(QString path : pathList) {
+            if(path.contains("$$PWD")) {
+                converted.replace("$$PWD", "$$PWD/Moonray");
+            } else {
+                converted.replace(path, pwdHead+path);
+            }
+        }
     }
     return converted;
 }
@@ -138,7 +146,6 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     QString parameters = linesContent.at(1);
     QStringList parameterList = parameters.trimmed().remove("\r\n").split('\\');
     parameterList.removeAll(QString(""));
-    qDebug()<<"ConvertProToPri::getPathList lineList:"<<linesContent<<endl<<"parameters:"<<parameterList;
     return parameterList;
 }
 

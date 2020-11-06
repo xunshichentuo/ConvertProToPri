@@ -43,6 +43,14 @@ TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLIST)
     ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
 }
 
+TEST_F(TestConvertProToPri, splitKeywordAndPath)
+{
+    QString beforeSplited = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\nActions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h \\\r\n");
+    QStringList expectedConverted{"Actions/AutoOrient/Components/DentalModel/DentalModel.h ", "Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h "};
+    QStringList afterSplited = converter->getPathList(beforeSplited);
+    ASSERT_THAT(afterSplited, Eq(expectedConverted));
+}
+
 TEST_F(TestConvertProToPri, convertTwoLineHEADERS)
 {
     QString beforeConverted = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
