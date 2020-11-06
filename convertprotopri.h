@@ -14,6 +14,7 @@ public:
 private:
     QString proFilePath;
     QFile srcFile;
+    QStringList configList;
 };
 
 #endif // CONVERTPROTOPRI_H

@@ -12,11 +12,9 @@ public:
     explicit ParseProConfig(QObject *parent = nullptr);
 
     QString convertOneConfig(const QString &waitConverted);
-private:
-    bool isNeedConvert(const QString &waitConverted);
-public:
     QStringList getPathList(const QString &data);
 private:
+    bool isNeedConvert(const QString &waitConverted);
     bool libsConfigDontHasRungL(const QStringList &libConfig);
     bool containsRungLPath(const QStringList &configData);
     QStringList getBeConvertedRungLPath(const QStringList &configData);
