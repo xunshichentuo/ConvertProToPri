@@ -95,6 +95,15 @@ TEST_F(TestConvertProToPri, dontChangedLIBSConfig)
     ASSERT_THAT(afterConverted, Eq(expectedConverted));
 }
 
+TEST_F(TestConvertProToPri, needChangedLIBSConfig)
+{
+    QString beforeConverted = QString("LIBS += -L$$PWD/Actions/SprFileReaderAndWriter/CompressionLibrary/zlib -lzlib");
+    QString expectedConverted = QString("LIBS += -L$$PWD/Moonray/Actions/SprFileReaderAndWriter/CompressionLibrary/zlib -lzlib");
+
+    QString afterConverted = converter->convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
+
 TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
 {
     EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));
