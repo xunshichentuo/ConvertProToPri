@@ -154,20 +154,23 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     QStringList linesContent = data.trimmed().split("=");
     if(linesContent.length() != 2) return QStringList("");
 
+    QString keyword = linesContent.at(0);
     QString parameters = linesContent.at(1);
-    QStringList parameterList;
+    QStringList needConvertedPaths;
     QString libsKeyword = QString("LIBS");
-    if(!linesContent.at(0).contains(libsKeyword)) {
-        parameterList = parameters.trimmed().remove("\r\n").split('\\');
-        parameterList.removeAll(QString(""));
+
+    if(keyword.contains(libsKeyword) && !parameters.contains("-L"))
+        return needConvertedPaths;
+
+    if(parameters.contains("-L")) {
+        int rungLPos = linesContent.at(1).indexOf("-L") + QString("-L").length();
+        needConvertedPaths.append(linesContent.at(1).mid(rungLPos));
     } else {
-        if(linesContent.at(1).contains("-L")) {
-            int rungLPos = linesContent.at(1).indexOf("-L") + QString("-L").length();
-            parameterList.append(linesContent.at(1).mid(rungLPos));
-        }
+        needConvertedPaths = parameters.trimmed().remove("\r\n").split('\\');
+        needConvertedPaths.removeAll(QString(""));
     }
 
-    return parameterList;
+    return needConvertedPaths;
 }
 
 void ConvertProToPri::moveToFileHead()
