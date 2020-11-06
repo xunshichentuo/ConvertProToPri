@@ -43,6 +43,14 @@ TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLIST)
     ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
 }
 
+TEST_F(TestConvertProToPri, convertTwoLineHEADERS)
+{
+    QString beforeConverted = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
+    QString expectedConverted = QString("HEADERS += \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
+    QString afterCovnerted = converter->convertOneLine(beforeConverted);
+    ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
+}
+
 TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
 {
     EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));

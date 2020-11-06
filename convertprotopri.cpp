@@ -15,8 +15,21 @@ ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : Q
 QString ConvertProToPri::convertOneLine(const QString &waitConverted)
 {
     QString converted = waitConverted;
-    if(converted.contains("$$PWD")) converted.replace("$$PWD", "$$PWD/Moonray");
+
+    if(isNeedConvert(waitConverted)) {
+        converted = convertPWDPath(waitConverted);
+    }
     return converted;
+}
+
+bool ConvertProToPri::isNeedConvert(const QString &waitConverted)
+{
+    for(QString keyword : keywordList) {
+        if(waitConverted.contains(keyword)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 QString ConvertProToPri::convertFile()
@@ -82,6 +95,12 @@ void ConvertProToPri::initKeyword()
     keywordList.append("DISTFILES");
     keywordList.append("RESOURCES");
     keywordList.append("QMAKE_INFO_PLIST");
+    keywordList.append("LIBS");
+    keywordList.append("RC_ICONS");
+    keywordList.append("INCLUDEPATH");
+    keywordList.append("DEPENDPATH");
+    keywordList.append("RESOURCES");
+    keywordList.append("TRANSLATIONS");
 }
 
 void ConvertProToPri::loadSrcFile(const QString srcFilePath)
@@ -105,13 +124,10 @@ bool ConvertProToPri::isValidIndex(const int index)
     }
 }
 
-QString ConvertProToPri::convertPWDPath(const QString lineContent)
+QString ConvertProToPri::convertPWDPath(const QString &lineContent)
 {
     QString convertedLine = lineContent;
-    if(lineContent.contains("$$PWD")) {
-        convertedLine.replace("$$PWD", "$$PWD/Moonray");
-    }
-
+    convertedLine.replace("$$PWD", "$$PWD/Moonray");
     return convertedLine;
 }
 

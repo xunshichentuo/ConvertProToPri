@@ -13,7 +13,7 @@ public:
     explicit ConvertProToPri(const QString srcFilePath, QObject *parent = nullptr);
 
     QString convertOneLine(const QString &waitConverted);
-
+    bool isNeedConvert(const QString &waitConverted);
 
 
     QString convertFile();
@@ -28,7 +28,7 @@ private:
     void loadSrcFile(const QString srcFilePath);
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
-    QString convertPWDPath(const QString lineContent);
+    QString convertPWDPath(const QString &lineContent);
     void moveToFileHead();
     void moveToSpecifiedLine(const int index);
     QString getSpecifiedLineContent(const int index);
