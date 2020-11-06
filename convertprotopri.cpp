@@ -152,9 +152,14 @@ QString ConvertProToPri::convertPwdPath(const QString &lineContent)
 QStringList ConvertProToPri::getPathList(const QString &data)
 {
     QStringList linesContent = data.trimmed().split("=");
+    if(linesContent.length() !=2) return QStringList("");
+
     QString parameters = linesContent.at(1);
-    QStringList parameterList = parameters.trimmed().remove("\r\n").split('\\');
-    parameterList.removeAll(QString(""));
+    QStringList parameterList;
+    if(!linesContent.at(0).contains("LIBS")) {
+        parameterList = parameters.trimmed().remove("\r\n").split('\\');
+        parameterList.removeAll(QString(""));
+    }
     return parameterList;
 }
 
