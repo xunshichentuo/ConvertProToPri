@@ -155,18 +155,14 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     if(linesContent.length() != 2)
         return QStringList("");
 
-    QString parameters = linesContent.at(1);
     QStringList needConvertedPaths;
-
     if(libsConfigDontHasRungL(linesContent))
         return needConvertedPaths;
 
-    if(parameters.contains("-L")) {
-        int rungLPos = linesContent.at(1).indexOf("-L") + QString("-L").length();
-        needConvertedPaths.append(linesContent.at(1).mid(rungLPos));
+    if(containsRungLPath(linesContent)) {
+        return getBeConvertedRungLPath(linesContent);
     } else {
-        needConvertedPaths = parameters.trimmed().remove("\r\n").split('\\');
-        needConvertedPaths.removeAll(QString(""));
+        return getBeConvertedNormalPath(linesContent);
     }
 
     return needConvertedPaths;
@@ -178,6 +174,24 @@ bool ConvertProToPri::libsConfigDontHasRungL(const QStringList &libConfig)
         return true;
     else
         return false;
+}
+
+bool ConvertProToPri::containsRungLPath(const QStringList &configData)
+{
+    return configData.at(1).contains("-L");
+}
+
+QStringList ConvertProToPri::getBeConvertedRungLPath(const QStringList &configData)
+{
+    int rungLPos = configData.at(1).indexOf("-L") + QString("-L").length();
+    return QStringList(configData.at(1).mid(rungLPos));
+}
+
+QStringList ConvertProToPri::getBeConvertedNormalPath(const QStringList &configData)
+{
+    QStringList convertedList = configData.at(1).trimmed().remove("\r\n").split('\\');
+    convertedList.removeAll(QString(""));
+    return convertedList;
 }
 
 void ConvertProToPri::moveToFileHead()

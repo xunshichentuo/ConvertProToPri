@@ -33,6 +33,9 @@ private:
 public:
     QStringList getPathList(const QString &data);
     bool libsConfigDontHasRungL(const QStringList &libConfig);
+    bool containsRungLPath(const QStringList &configData);
+    QStringList getBeConvertedRungLPath(const QStringList &configData);
+    QStringList getBeConvertedNormalPath(const QStringList &configData);
 private:
     void moveToFileHead();
     void moveToSpecifiedLine(const int index);
