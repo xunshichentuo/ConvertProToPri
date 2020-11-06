@@ -29,6 +29,7 @@ private:
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
     QString convertPWDPath(const QString &lineContent);
+    QStringList getPathList(const QString &data);
     void moveToFileHead();
     void moveToSpecifiedLine(const int index);
     QString getSpecifiedLineContent(const int index);

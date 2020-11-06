@@ -17,6 +17,7 @@ QString ConvertProToPri::convertOneLine(const QString &waitConverted)
     QString converted = waitConverted;
 
     if(isNeedConvert(waitConverted)) {
+        getPathList(waitConverted);
         converted = convertPWDPath(waitConverted);
     }
     return converted;
@@ -129,6 +130,16 @@ QString ConvertProToPri::convertPWDPath(const QString &lineContent)
     QString convertedLine = lineContent;
     convertedLine.replace("$$PWD", "$$PWD/Moonray");
     return convertedLine;
+}
+
+QStringList ConvertProToPri::getPathList(const QString &data)
+{
+    QStringList linesContent = data.trimmed().split("=");
+    QString parameters = linesContent.at(1);
+    QStringList parameterList = parameters.trimmed().remove("\r\n").split('\\');
+    parameterList.removeAll(QString(""));
+    qDebug()<<"ConvertProToPri::getPathList lineList:"<<linesContent<<endl<<"parameters:"<<parameterList;
+    return parameterList;
 }
 
 void ConvertProToPri::moveToFileHead()
