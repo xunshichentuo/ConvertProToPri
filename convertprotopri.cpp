@@ -160,7 +160,13 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     if(!linesContent.at(0).contains(libsKeyword)) {
         parameterList = parameters.trimmed().remove("\r\n").split('\\');
         parameterList.removeAll(QString(""));
+    } else {
+        if(linesContent.at(1).contains("-L")) {
+            int rungLPos = linesContent.at(1).indexOf("-L") + QString("-L").length();
+            parameterList.append(linesContent.at(1).mid(rungLPos));
+        }
     }
+
     return parameterList;
 }
 
