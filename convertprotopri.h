@@ -29,7 +29,7 @@ private:
     void loadSrcFile(const QString srcFilePath);
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
-    QString convertPWDPath(const QString &lineContent);
+    QString convertPwdPath(const QString &lineContent);
 public:
     QStringList getPathList(const QString &data);
 private:
@@ -38,10 +38,6 @@ private:
     QString getSpecifiedLineContent(const int index);
     int getFirstKeyWordLineNumber(const QString filePath, const QString keyword);
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);
-signals:
-
-public slots:
-
 private:
     QString proFilePath;
     QList<QString> keywordList;

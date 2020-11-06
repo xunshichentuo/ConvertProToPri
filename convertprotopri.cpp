@@ -65,7 +65,7 @@ QString ConvertProToPri::convertOneLine(const int index)
     if(!isValidIndex(index)) return "";
 
     QString rawLineData = getSpecifiedLineContent(index);
-    QString convertLineData = convertPWDPath(rawLineData);
+    QString convertLineData = convertPwdPath(rawLineData);
     return convertLineData;
 }
 
@@ -140,7 +140,7 @@ bool ConvertProToPri::isValidIndex(const int index)
     }
 }
 
-QString ConvertProToPri::convertPWDPath(const QString &lineContent)
+QString ConvertProToPri::convertPwdPath(const QString &lineContent)
 {
     QString convertedLine = lineContent;
     convertedLine.replace("$$PWD", "$$PWD/Moonray");

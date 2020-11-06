@@ -56,8 +56,15 @@ TEST_F(TestConvertProToPri, convertTwoLineHEADERS)
     QString beforeConverted = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
     QString expectedConverted = QString("HEADERS += \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
     QString afterCovnerted = converter->convertOneConfig(beforeConverted);
-
     ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
+}
+
+TEST_F(TestConvertProToPri, convertRESOURCESConfig)
+{
+    QString beforeConverted = QString("RESOURCES += \\\r\nqml.qrc \\\r\n$$PWD/ExternalExecutables\r\n");
+    QString expectedConverted = QString("RESOURCES += \\\r\n$$PWD/Moonray/qml.qrc \\\r\n$$PWD/Moonray/ExternalExecutables\r\n");
+    QString afterConverted = converter->convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
 }
 
 TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
