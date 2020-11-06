@@ -1,5 +1,5 @@
 #include "tst_convertprotopri.h"
-
+#include "tst_profilereader.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char *argv[])
