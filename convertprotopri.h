@@ -12,11 +12,6 @@ public:
     explicit ConvertProToPri(QObject *parent = nullptr);
     explicit ConvertProToPri(const QString srcFilePath, QObject *parent = nullptr);
 
-    QString convertOneConfig(const QString &waitConverted);
-    bool isNeedConvert(const QString &waitConverted);
-    QString addPwdHeadPathInPaths(const QString &waitConverted, QStringList pathList);
-
-
     QString convertFile();
     QString convertNextLine();
     QString convertOneLine(const int index);
@@ -25,13 +20,11 @@ public:
     int getSourceFileLineNumber(const QString srcPath);
 
 private:
-    void initKeyword();
     void loadSrcFile(const QString srcFilePath);
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
     QString convertPwdPath(const QString &lineContent);
 public:
-    QStringList getPathList(const QString &data);
     bool libsConfigDontHasRungL(const QStringList &libConfig);
     bool containsRungLPath(const QStringList &configData);
     QStringList getBeConvertedRungLPath(const QStringList &configData);
@@ -44,7 +37,6 @@ private:
     QString getFirstKeyWordLineData(const QString filePath, const QString keyword);
 private:
     QString proFilePath;
-    QList<QString> hasPathKeywords;
     QFile srcFile;
 };
 

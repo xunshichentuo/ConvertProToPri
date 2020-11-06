@@ -7,10 +7,12 @@ CONFIG += thread
 
 HEADERS +=     \
     convertprotopri.h \
-    tst_convertprotopri.h
+    tst_convertprotopri.h \
+    parseproconfig.h
 
 SOURCES +=     main.cpp \
-    convertprotopri.cpp
+    convertprotopri.cpp \
+    parseproconfig.cpp
 
 RESOURCES += \
     res.qrc
