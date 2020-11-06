@@ -2,16 +2,12 @@
 
 ConvertProToPri::ConvertProToPri(QObject *parent) : QObject(parent)
 {
-    keywordList.clear();
-    keywordList.append("HEADERS");
-    keywordList.append("SOURCES");
-    keywordList.append("DISTFILES");
-    keywordList.append("RESOURCES");
-    keywordList.append("QMAKE_INFO_PLIST");
+    initKeyword();
 }
 
 ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : QObject(parent)
 {
+    initKeyword();
     loadSrcFile(srcFilePath);
     moveToFileHead();
 }
@@ -20,6 +16,11 @@ QString ConvertProToPri::convertFile()
 {
     if(!isOpenSrcFile()) return "";
     return srcFile.readLine();
+}
+
+QString ConvertProToPri::convertNextLine()
+{
+    QString rawLine = this->srcFile.readLine();
 }
 
 QString ConvertProToPri::convertOneLine(const int index)
@@ -66,34 +67,14 @@ int ConvertProToPri::getSourceFileLineNumber(const QString srcPath)
     return count;
 }
 
-int ConvertProToPri::getLineNumberOfHEADERS(const QString srcPath)
+void ConvertProToPri::initKeyword()
 {
-    return getFirstKeyWordLineNumber(srcPath, "HEADERS");
-}
-
-int ConvertProToPri::getLineNumberOfSOURCES(const QString srcPath)
-{
-    return getFirstKeyWordLineNumber(srcPath, "SOURCES");
-}
-
-int ConvertProToPri::getLineNumberOfDISTFILES(const QString srcPath)
-{
-    return getFirstKeyWordLineNumber(srcPath, "DISTFILES");
-}
-
-int ConvertProToPri::getLineNumberOfRESOURCES(const QString srcPath)
-{
-    return getFirstKeyWordLineNumber(srcPath, "RESOURCES");
-}
-
-int ConvertProToPri::getLineNumberOfQMAKEINFOPLIST(const QString srcPath)
-{
-    return getFirstKeyWordLineNumber(srcPath, "QMAKE_INFO_PLIST");
-}
-
-QString ConvertProToPri::convertQMAKEINFOPLIST(const QString srcPath)
-{
-    return getFirstKeyWordLineData(srcPath, "QMAKE_INFO_PLIST");
+    keywordList.clear();
+    keywordList.append("HEADERS");
+    keywordList.append("SOURCES");
+    keywordList.append("DISTFILES");
+    keywordList.append("RESOURCES");
+    keywordList.append("QMAKE_INFO_PLIST");
 }
 
 void ConvertProToPri::loadSrcFile(const QString srcFilePath)

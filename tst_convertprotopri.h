@@ -35,7 +35,7 @@ TEST_F(TestConvertProToPri, testFirstLine)
     ASSERT_THAT(converter->convertOneLine(1), Eq(firstLine));
 }
 
-TEST_F(TestConvertProToPri, requiredConversionUnderSpecifiedLineNumber)
+TEST_F(TestConvertProToPri, DISABLED_requiredConversionUnderSpecifiedLineNumber)
 {
     EXPECT_TRUE(converter->needConvert(expectQMAKE_INFO_PLISTLinePosition));
 }
@@ -43,41 +43,4 @@ TEST_F(TestConvertProToPri, requiredConversionUnderSpecifiedLineNumber)
 TEST_F(TestConvertProToPri, countProFileLineNumber)
 {
     ASSERT_THAT(converter->getSourceFileLineNumber(srcFilePath), Eq(expectSourceFileLineNumber));
-}
-
-TEST_F(TestConvertProToPri, countProFileHEADERSLineNumber)
-{
-    ASSERT_THAT(converter->getLineNumberOfHEADERS(srcFilePath), Eq(expectHEADERSLinePosition));
-}
-
-TEST_F(TestConvertProToPri, countProFileSOURCESLineNumber)
-{
-    ASSERT_THAT(converter->getLineNumberOfSOURCES(srcFilePath), Eq(expectSOURCESLinePosition));
-}
-
-TEST_F(TestConvertProToPri, countProFileDISTFILESLineNumber)
-{
-    ASSERT_THAT(converter->getLineNumberOfDISTFILES(srcFilePath), Eq(expectDISTFILESLinePosition));
-}
-
-TEST_F(TestConvertProToPri, countProFileRESOURCESLineNumber)
-{
-    ASSERT_THAT(converter->getLineNumberOfRESOURCES(srcFilePath), Eq(expectRESOURCESLinePosition));
-}
-
-TEST_F(TestConvertProToPri, countProFileQMAKE_INFO_PLISTLineNumber)
-{
-    ASSERT_THAT(converter->getLineNumberOfQMAKEINFOPLIST(srcFilePath), Eq(expectQMAKE_INFO_PLISTLinePosition));
-}
-
-TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLISTLine)
-{
-    QString expectQMAKE_INFO_PLISTResult = "QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n";
-    ASSERT_THAT(converter->convertQMAKEINFOPLIST(srcFilePath), Eq(expectQMAKE_INFO_PLISTResult));
-}
-
-TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLISTRow)
-{
-    QString expectQMAKE_INFO_PLISTResult = "QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n";
-    ASSERT_THAT(converter->convertOneLine(expectQMAKE_INFO_PLISTLinePosition), expectQMAKE_INFO_PLISTResult);
 }
