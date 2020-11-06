@@ -32,14 +32,14 @@ public:
 TEST_F(TestConvertProToPri, testFirstLine)
 {
     QString firstLine = QString("QT += qml quick opengl serialport testlib xml websockets network\r\n");
-    ASSERT_THAT(converter->convertOneLine(firstLine), Eq(firstLine));
+    ASSERT_THAT(converter->convertOneConfig(firstLine), Eq(firstLine));
 }
 
 TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLIST)
 {
     QString beforeConverted = QString("QMAKE_INFO_PLIST = $$PWD/MacDeployment/Info.plist\r\n");
     QString expectedConverted = QString("QMAKE_INFO_PLIST = $$PWD/Moonray/MacDeployment/Info.plist\r\n");
-    QString afterCovnerted = converter->convertOneLine(beforeConverted);
+    QString afterCovnerted = converter->convertOneConfig(beforeConverted);
     ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
 }
 
@@ -55,7 +55,7 @@ TEST_F(TestConvertProToPri, convertTwoLineHEADERS)
 {
     QString beforeConverted = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
     QString expectedConverted = QString("HEADERS += \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\n");
-    QString afterCovnerted = converter->convertOneLine(beforeConverted);
+    QString afterCovnerted = converter->convertOneConfig(beforeConverted);
 
     ASSERT_THAT(afterCovnerted, Eq(expectedConverted));
 }

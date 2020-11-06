@@ -12,21 +12,13 @@ ConvertProToPri::ConvertProToPri(const QString srcFilePath, QObject *parent) : Q
     moveToFileHead();
 }
 
-QString ConvertProToPri::convertOneLine(const QString &waitConverted)
+QString ConvertProToPri::convertOneConfig(const QString &waitConverted)
 {
     QString converted = waitConverted;
 
     if(isNeedConvert(waitConverted)) {
         QStringList pathList = getPathList(waitConverted);
-
-        QString pwdHead = "$$PWD/Moonray/";
-        for(QString path : pathList) {
-            if(path.contains("$$PWD")) {
-                converted.replace("$$PWD", "$$PWD/Moonray");
-            } else {
-                converted.replace(path, pwdHead+path);
-            }
-        }
+        converted = addPwdHeadPathInPaths(converted, pathList);
     }
     return converted;
 }
@@ -39,6 +31,21 @@ bool ConvertProToPri::isNeedConvert(const QString &waitConverted)
         }
     }
     return false;
+}
+
+QString ConvertProToPri::addPwdHeadPathInPaths(const QString &waitConverted, QStringList pathList)
+{
+    QString converted = waitConverted;
+    QString pwdHead = "$$PWD/Moonray/";
+    for(QString path : pathList) {
+        if(path.contains("$$PWD")) {
+            converted.replace("$$PWD", "$$PWD/Moonray");
+        } else {
+            converted.replace(path, pwdHead+path);
+        }
+    }
+
+    return converted;
 }
 
 QString ConvertProToPri::convertFile()

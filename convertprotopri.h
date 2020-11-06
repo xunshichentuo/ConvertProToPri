@@ -12,8 +12,10 @@ public:
     explicit ConvertProToPri(QObject *parent = nullptr);
     explicit ConvertProToPri(const QString srcFilePath, QObject *parent = nullptr);
 
-    QString convertOneLine(const QString &waitConverted);
+    QString convertOneConfig(const QString &waitConverted);
     bool isNeedConvert(const QString &waitConverted);
+    QString addPwdHeadPathInPaths(const QString &waitConverted, QStringList pathList);
+
 
     QString convertFile();
     QString convertNextLine();
