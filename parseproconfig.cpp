@@ -27,16 +27,6 @@ QString ParseProConfig::convertOneConfig(const QString &waitConverted)
     return converted;
 }
 
-bool ParseProConfig::isNeedConvert(const QString &waitConverted)
-{
-    for(QString keyword : hasPathKeywords) {
-        if(waitConverted.contains(keyword)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 QStringList ParseProConfig::getPathList(const QString &data)
 {
     QStringList linesContent = data.trimmed().split("=");
@@ -52,6 +42,16 @@ QStringList ParseProConfig::getPathList(const QString &data)
     } else {
         return getBeConvertedNormalPath(linesContent);
     }
+}
+
+bool ParseProConfig::isNeedConvert(const QString &waitConverted)
+{
+    for(QString keyword : hasPathKeywords) {
+        if(waitConverted.contains(keyword)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool ParseProConfig::libsConfigDontHasRungL(const QStringList &libConfig)
