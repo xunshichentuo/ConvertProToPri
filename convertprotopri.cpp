@@ -164,8 +164,6 @@ QStringList ConvertProToPri::getPathList(const QString &data)
     } else {
         return getBeConvertedNormalPath(linesContent);
     }
-
-    return needConvertedPaths;
 }
 
 bool ConvertProToPri::libsConfigDontHasRungL(const QStringList &libConfig)
