@@ -15,7 +15,6 @@ public:
     QString convertOneLine(const QString &waitConverted);
     bool isNeedConvert(const QString &waitConverted);
 
-
     QString convertFile();
     QString convertNextLine();
     QString convertOneLine(const int index);
@@ -29,7 +28,9 @@ private:
     bool isOpenSrcFile();
     bool isValidIndex(const int index);
     QString convertPWDPath(const QString &lineContent);
+public:
     QStringList getPathList(const QString &data);
+private:
     void moveToFileHead();
     void moveToSpecifiedLine(const int index);
     QString getSpecifiedLineContent(const int index);
