@@ -17,8 +17,7 @@ public:
     QStringList splitConfigFromData();
     bool isTempStroageContainedEqualSign(const int &index);
     bool isTempStroageNeedReserved(const int &index);
-    bool isTempStroageContainedPoundSign(const int &index);
-    bool isTempStroageContainedCurlyBracketsSign(const int &index);
+    bool isEmptyLine(const QString &lineData);
     bool isConfigListBeingAddedSubLine(const QStringList &configList);
     QVector<int> getConfigStartIndex(const QStringList &data);
     QStringList tempStroageDataList;

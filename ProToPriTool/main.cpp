@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
         waitForConverting.close();
     }
 
-
     ParseProConfig parseProConfig;
 
     QFile output("./output");
