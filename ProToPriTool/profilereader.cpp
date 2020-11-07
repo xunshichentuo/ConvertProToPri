@@ -26,11 +26,12 @@ QStringList ProFileReader::splitConfigFromData()
     for(int i=0;i<tempStroageDataList.length();i++) {
         if(isTempStroageContainedEqualSign(i)) {
             configList.append(tempStroageDataList.at(i));
-        } else if(!isTempStroageContainedEqualSign(i)
+        }
+        else if(!isTempStroageContainedEqualSign(i)
                   && isConfigListBeingAddedSubLine(configList)) {
-                configList.last().append(tempStroageDataList.at(i));
+            configList.last().append(tempStroageDataList.at(i));
         } else if(!isTempStroageContainedEqualSign(i) &&
-                  isTempStroageContainedPoundSign(i)) {
+                  isTempStroageNeedReserved(i)) {
             configList.append(tempStroageDataList.at(i));
         }
     }
@@ -43,15 +44,34 @@ bool ProFileReader::isTempStroageContainedEqualSign(const int &index)
     return tempStroageDataList.at(index).contains("=");
 }
 
+bool ProFileReader::isTempStroageNeedReserved(const int &index)
+{
+    if(index >=0 && index >= tempStroageDataList.length()) return false;
+    QString value = tempStroageDataList.at(index);
+    return value.contains("{") || value.contains("}") || value.contains("#");
+}
+
 bool ProFileReader::isTempStroageContainedPoundSign(const int &index)
 {
     if(index >=0 && index >= tempStroageDataList.length()) return false;
     return tempStroageDataList.at(index).contains("#");
 }
 
+bool ProFileReader::isTempStroageContainedCurlyBracketsSign(const int &index)
+{
+    if(index >=0 && index >= tempStroageDataList.length()) return false;
+    QString value = tempStroageDataList.at(index);
+    return value.contains("{") || value.contains("}");
+}
+
 bool ProFileReader::isConfigListBeingAddedSubLine(const QStringList &configList)
 {
-    if(configList.length() >=1 && configList.last().contains("\\")) {
+    if(configList.length() < 1)
+        return false;
+
+    QStringList lineLastList = configList.last().split("\r\n");
+    lineLastList.removeAll("");
+    if(lineLastList.last().contains("\\")) {
         return true;
     } else {
         return false;

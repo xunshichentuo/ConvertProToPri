@@ -101,20 +101,13 @@ QStringList ParseProConfig::getBeConvertedNormalPath(const QStringList &configDa
 QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, const QStringList &toBeConvertList)
 {
     QString converted = waitConverted;
-    QStringList convertedList = converted.split(" ");
-    convertedList.removeAll("");
-
-//    QStringList removeSpaceList;
-//    for(int i=0;i<toBeConvertList.length();i++) {
-//        QString oneCell = toBeConvertList.at(i);
-//        removeSpaceList.append(oneCell.remove(QRegExp("\\s")));
-//    }
-
-//    qDebug()<<"================================";
-//    qDebug()<<"convertedList:"<<convertedList;
-//    qDebug()<<"================================";
-//    qDebug()<<"toBeConvertList:"<<removeSpaceList;
     for(QString path : toBeConvertList) {
+//        converted.indexOf(QRegExp(QString("[ ][]"), 0)
+//        QString x = "Say yes!";
+//        QString y = "no";
+//        x.replace(4, 3, y);
+        // x == "Say no!"
+
         converted.replace(path, getReplacePath(path));
     }
     return converted;

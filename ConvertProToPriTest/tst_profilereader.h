@@ -128,13 +128,12 @@ TEST_F(TestProfileReader, reserveCurlyBrackets)
 {
     QString firstLine = QString("win32 {\r\n");
     QString secondLine = QString("    HEADERS +=  Networking/WinSSH/libsshwin64wrapper.h \\\r\n");
-    QString thirdLine = QString("                Networking/WinSSH/winsshclient.h \\\r\n");
+    QString thirdLine = QString("                Networking/WinSSH/winsshclient.h \r\n");
     QString fourthLine = QString("}\r\n");
 
     QStringList expectEachConfig;
     expectEachConfig.append(firstLine);
-    expectEachConfig.append(secondLine);
-    expectEachConfig.append(thirdLine);
+    expectEachConfig.append(secondLine+thirdLine);
     expectEachConfig.append(fourthLine);
 
     proFileReader.loadOneRowOfData(firstLine);
