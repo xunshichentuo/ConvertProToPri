@@ -99,7 +99,7 @@ TEST_F(TestProfileReader, getEachConfigFromDataListWithBlankLine)
     ASSERT_THAT(afterConverted, Eq(expectEachConfig));
 }
 
-TEST_F(TestProfileReader, mustkeepComments)
+TEST_F(TestProfileReader, mustReserveComments)
 {
     QString firstLine = QString("#Application version\r\n");
     QString secondLine = QString("VERSION_MAJOR = 2\r\n");
@@ -121,5 +121,26 @@ TEST_F(TestProfileReader, mustkeepComments)
     proFileReader.loadOneRowOfData(fifthLine);
     QStringList afterConverted = proFileReader.splitConfigFromData();
 
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}
+
+TEST_F(TestProfileReader, reserveCurlyBrackets)
+{
+    QString firstLine = QString("win32 {\r\n");
+    QString secondLine = QString("    HEADERS +=  Networking/WinSSH/libsshwin64wrapper.h \\\r\n");
+    QString thirdLine = QString("                Networking/WinSSH/winsshclient.h \\\r\n");
+    QString fourthLine = QString("}\r\n");
+
+    QStringList expectEachConfig;
+    expectEachConfig.append(firstLine);
+    expectEachConfig.append(secondLine);
+    expectEachConfig.append(thirdLine);
+    expectEachConfig.append(fourthLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    proFileReader.loadOneRowOfData(fourthLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
     ASSERT_THAT(afterConverted, Eq(expectEachConfig));
 }
