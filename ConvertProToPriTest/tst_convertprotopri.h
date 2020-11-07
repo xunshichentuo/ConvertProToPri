@@ -116,3 +116,12 @@ TEST_F(TestConvertProToPri, convertSOURCESConfigWithBlankSpace)
     QString afterConverted = parseProConfig.convertOneConfig(beforeConverted);
     ASSERT_THAT(afterConverted, Eq(expectedConverted));
 }
+
+TEST_F(TestConvertProToPri, fullNameOfFileContainedInAnotherFileName)
+{
+    QString beforeConverted = QString("SOURCES += main.cpp \\\r\n    Actions/SprFileReaderAndWriter/CompressionLibrary/quazip_global.h \\\r\n    global.h\r\n\r\n");
+    QString expectedConverted = QString("SOURCES += main.cpp \\\r\n    $$PWD/Moonray/Actions/SprFileReaderAndWriter/CompressionLibrary/quazip_global.h \\\r\n    $$PWD/Moonray/global.h\r\n\r\n");
+
+    QString afterConverted = parseProConfig.convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
