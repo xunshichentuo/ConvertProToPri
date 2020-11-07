@@ -15,6 +15,9 @@ public:
     void loadOneRowOfData(const QString &rowData);
     QStringList getTempStroageDataList() const;
     QStringList splitConfigFromData();
+    bool isTempStroageContainedEqualSign(const int &index);
+    bool isTempStroageContainedPoundSign(const int &index);
+    bool isConfigListBeingAddedSubLine(const QStringList &configList);
 
     QVector<int> getConfigStartIndex(const QStringList &data);
     QStringList tempStroageDataList;

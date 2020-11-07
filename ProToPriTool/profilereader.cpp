@@ -7,7 +7,6 @@ ProFileReader::ProFileReader(QObject *parent) : QObject(parent)
 
 void ProFileReader::loadOneRowOfData(const QString &rowData)
 {
-    qDebug()<<"tempStroageDataList.length()"<<tempStroageDataList.length()<<tempStroageDataList;
     tempStroageDataList.append(rowData);
 }
 
@@ -25,20 +24,38 @@ QStringList ProFileReader::splitConfigFromData()
 
     QStringList configList;
     for(int i=0;i<tempStroageDataList.length();i++) {
-        qDebug()<<"i:"<<i<<tempStroageDataList.at(i);
-        if(tempStroageDataList.at(i).contains("=")) {
+        if(isTempStroageContainedEqualSign(i)) {
             configList.append(tempStroageDataList.at(i));
-        } else if(!tempStroageDataList.at(i).contains("=")
-                  && (configList.length() >= 1) && configList.last().contains("\\")){
-            if(configList.length() != 0) {
+        } else if(!isTempStroageContainedEqualSign(i)
+                  && isConfigListBeingAddedSubLine(configList)) {
                 configList.last().append(tempStroageDataList.at(i));
-            }
-        } else if(!tempStroageDataList.at(i).contains("=") &&
-                  tempStroageDataList.at(i).contains("#")) {
+        } else if(!isTempStroageContainedEqualSign(i) &&
+                  isTempStroageContainedPoundSign(i)) {
             configList.append(tempStroageDataList.at(i));
         }
     }
     return configList;
+}
+
+bool ProFileReader::isTempStroageContainedEqualSign(const int &index)
+{
+    if(index >=0 && index >= tempStroageDataList.length()) return false;
+    return tempStroageDataList.at(index).contains("=");
+}
+
+bool ProFileReader::isTempStroageContainedPoundSign(const int &index)
+{
+    if(index >=0 && index >= tempStroageDataList.length()) return false;
+    return tempStroageDataList.at(index).contains("#");
+}
+
+bool ProFileReader::isConfigListBeingAddedSubLine(const QStringList &configList)
+{
+    if(configList.length() >=1 && configList.last().contains("\\")) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 QVector<int> ProFileReader::getConfigStartIndex(const QStringList &data)
