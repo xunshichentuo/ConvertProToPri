@@ -21,9 +21,8 @@ QString ParseProConfig::convertOneConfig(const QString &waitConverted)
     QString converted = waitConverted;
 
     if(isNeedConvert(waitConverted)) {
-        QStringList pathList = getToBeConvertPathList(waitConverted);
-//        qDebug()<<"pathList:"<<pathList;
-        converted = addPwdHeadPathInPaths(converted, pathList);
+        QStringList toBeConvertPathListpathList = getToBeConvertPathList(waitConverted);
+        converted = addPwdHeadPathInPaths(converted, toBeConvertPathListpathList);
     }
     return converted;
 }
@@ -99,12 +98,12 @@ QStringList ParseProConfig::getBeConvertedNormalPath(const QStringList &configDa
     return convertedList;
 }
 
-QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStringList pathList)
+QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStringList toBeConvertList)
 {
     QString converted = waitConverted;
     QString pwdHead = "$$PWD/Moonray/";
 
-    for(QString path : pathList) {
+    for(QString path : toBeConvertList) {
         if(path.contains("$$PWD")) {
             QString replacePath = path;
             replacePath.replace("$$PWD", "$$PWD/Moonray");

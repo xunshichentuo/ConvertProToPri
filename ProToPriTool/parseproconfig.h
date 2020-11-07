@@ -22,7 +22,7 @@ private:
     bool containsRungLPath(const QStringList &configData);
     QStringList getBeConvertedRungLPath(const QStringList &configData);
     QStringList getBeConvertedNormalPath(const QStringList &configData);
-    QString addPwdHeadPathInPaths(const QString &waitConverted, QStringList pathList);
+    QString addPwdHeadPathInPaths(const QString &waitConverted, QStringList toBeConvertList);
 
 private:
     QList<QString> hasPathKeywords;
