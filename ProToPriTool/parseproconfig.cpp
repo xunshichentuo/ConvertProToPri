@@ -110,9 +110,11 @@ QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStr
 QString ParseProConfig::getReplacePath(const QString &path)
 {
     QString pwdHead = "$$PWD/Moonray/";
+    QString pwdKeyword = "$$PWD";
+    QString pwdReplaceKeyWord = "$$PWD/Moonray";
     QString replacePath = path;
-    if(replacePath.contains("$$PWD")) {
-        replacePath.replace("$$PWD", "$$PWD/Moonray");
+    if(replacePath.contains(pwdKeyword)) {
+        replacePath.replace(pwdKeyword, pwdReplaceKeyWord);
     } else {
         replacePath = pwdHead+path;
     }
