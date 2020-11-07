@@ -23,6 +23,7 @@ private:
     QStringList getBeConvertedRungLPath(const QStringList &configData);
     QStringList getBeConvertedNormalPath(const QStringList &configData);
     QString addPwdHeadPathInPaths(const QString &waitConverted, QStringList toBeConvertList);
+    QString getReplacePath(const QString &path);
 
 private:
     QList<QString> hasPathKeywords;

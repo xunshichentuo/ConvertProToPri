@@ -101,16 +101,20 @@ QStringList ParseProConfig::getBeConvertedNormalPath(const QStringList &configDa
 QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStringList toBeConvertList)
 {
     QString converted = waitConverted;
-    QString pwdHead = "$$PWD/Moonray/";
-
     for(QString path : toBeConvertList) {
-        if(path.contains("$$PWD")) {
-            QString replacePath = path;
-            replacePath.replace("$$PWD", "$$PWD/Moonray");
-            converted.replace(path, replacePath);
-        } else {
-            converted.replace(path, pwdHead+path);
-        }
+        converted.replace(path, getReplacePath(path));
     }
     return converted;
+}
+
+QString ParseProConfig::getReplacePath(const QString &path)
+{
+    QString pwdHead = "$$PWD/Moonray/";
+    QString replacePath = path;
+    if(replacePath.contains("$$PWD")) {
+        replacePath.replace("$$PWD", "$$PWD/Moonray");
+    } else {
+        replacePath = pwdHead+path;
+    }
+    return replacePath;
 }
