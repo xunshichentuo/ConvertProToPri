@@ -55,15 +55,6 @@ bool ParseProConfig::isNeedConvert(const QString &waitConverted)
     return false;
 }
 
-QStringList ParseProConfig::removeAllFrontBlank(const QStringList &data)
-{
-    QStringList removeList;
-    for(int i=0;i<data.length();i++) {
-        removeList.append(removeFrontBlank(data.at(i)));
-    }
-    return removeList;
-}
-
 QStringList ParseProConfig::removeAllSpace(const QStringList &data)
 {
     QStringList removeList;
@@ -71,13 +62,6 @@ QStringList ParseProConfig::removeAllSpace(const QStringList &data)
         removeList.append(removeSpace(data.at(i)));
     }
     return removeList;
-}
-
-QString ParseProConfig::removeFrontBlank(const QString &data)
-{
-    QString removeResult = data;
-    removeResult.remove(QRegExp("^ +\\s*"));
-    return removeResult;
 }
 
 QString ParseProConfig::removeSpace(const QString &data)

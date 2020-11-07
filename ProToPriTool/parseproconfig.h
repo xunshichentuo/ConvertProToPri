@@ -16,9 +16,7 @@ public:
     QStringList getToBeConvertPathList(const QString &data);
 private:
     bool isNeedConvert(const QString &waitConverted);
-    QStringList removeAllFrontBlank(const QStringList &data);
     QStringList removeAllSpace(const QStringList &data);
-    QString removeFrontBlank(const QString &data);
     QString removeSpace(const QString &data);
     bool containsHasLibConfigAndDontHasRungL(const QStringList &libConfig);
     bool containsRungLPath(const QStringList &configData);
