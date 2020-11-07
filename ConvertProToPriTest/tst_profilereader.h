@@ -43,24 +43,6 @@ TEST_F(TestProfileReader, testConfigStartIndex)
     ASSERT_THAT(actualStartIndex, Eq(expectConfigStartIndex));
 }
 
-TEST_F(TestProfileReader, DISABLED_getEachConfigFromDataList)
-{
-    QString firstLine = QString("QT += qml quick opengl serialport \\\r\n");
-    QString secondLine = QString("testlib xml websockets network\r\n");
-    QString thirdLine = QString("CONFIG += c++11\r\n");
-
-    QStringList expectEachConfig;
-    expectEachConfig.append(firstLine+ secondLine);
-    expectEachConfig.append(thirdLine);
-
-    proFileReader.loadOneRowOfData(firstLine);
-    proFileReader.loadOneRowOfData(secondLine);
-    proFileReader.loadOneRowOfData(thirdLine);
-    QStringList afterConverted = proFileReader.splitConfigFromData();
-
-    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
-}
-
 TEST_F(TestProfileReader, testFitstThreeLineConfig)
 {
     QString firstLine = QString("QT += qml quick opengl serialport testlib xml websockets network\r\n");
@@ -79,3 +61,40 @@ TEST_F(TestProfileReader, testFitstThreeLineConfig)
     ASSERT_THAT(afterConverted, Eq(expectedConverted));
 }
 
+TEST_F(TestProfileReader, getEachConfigFromDataList)
+{
+    QString firstLine = QString("QT += qml quick opengl serialport \\\r\n");
+    QString secondLine = QString("testlib xml websockets network\r\n");
+    QString thirdLine = QString("CONFIG += c++11\r\n");
+
+    QStringList expectEachConfig;
+    expectEachConfig.append(firstLine+ secondLine);
+    expectEachConfig.append(thirdLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
+
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}
+
+TEST_F(TestProfileReader, getEachConfigFromDataListWithBlankLine)
+{
+    QString firstLine = QString("QT += qml quick opengl serialport \\\r\n");
+    QString secondLine = QString("testlib xml websockets network\r\n");
+    QString thirdLine = QString("\r\n");
+    QString fourthLine = QString("CONFIG += c++11\r\n");
+
+    QStringList expectEachConfig;
+    expectEachConfig.append(firstLine+ secondLine+thirdLine);
+    expectEachConfig.append(fourthLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    proFileReader.loadOneRowOfData(fourthLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
+
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}

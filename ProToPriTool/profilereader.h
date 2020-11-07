@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QVector>
+#include <QDebug>
 
 class ProFileReader : public QObject
 {

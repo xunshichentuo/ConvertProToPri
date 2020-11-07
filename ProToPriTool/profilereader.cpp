@@ -23,6 +23,11 @@ QStringList ProFileReader::splitConfigFromData()
     for(int i=0;i<tempStroageDataList.length();i++) {
         if(tempStroageDataList.at(i).contains("=")) {
             configList.append(tempStroageDataList.at(i));
+        } else if(!tempStroageDataList.at(i).contains("=")
+                  && configList.last().contains("\\")){
+            if(configList.length() != 0) {
+                configList.last().append(tempStroageDataList.at(i));
+            }
         }
     }
     return configList;
