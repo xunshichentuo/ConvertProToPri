@@ -83,11 +83,12 @@ TEST_F(TestProfileReader, getEachConfigFromDataListWithBlankLine)
 {
     QString firstLine = QString("QT += qml quick opengl serialport \\\r\n");
     QString secondLine = QString("testlib xml websockets network\r\n");
-    QString thirdLine = QString("\r\n");
+    QString thirdLine = QString("  \r\n");
     QString fourthLine = QString("CONFIG += c++11\r\n");
 
     QStringList expectEachConfig;
-    expectEachConfig.append(firstLine+ secondLine+thirdLine);
+    expectEachConfig.append(firstLine+ secondLine);
+    expectEachConfig.append(thirdLine);
     expectEachConfig.append(fourthLine);
 
     proFileReader.loadOneRowOfData(firstLine);
