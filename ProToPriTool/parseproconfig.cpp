@@ -21,26 +21,27 @@ QString ParseProConfig::convertOneConfig(const QString &waitConverted)
     QString converted = waitConverted;
 
     if(isNeedConvert(waitConverted)) {
-        QStringList pathList = getPathList(waitConverted);
+        QStringList pathList = getToBeConvertPathList(waitConverted);
         converted = addPwdHeadPathInPaths(converted, pathList);
     }
     return converted;
 }
 
-QStringList ParseProConfig::getPathList(const QString &data)
+QStringList ParseProConfig::getToBeConvertPathList(const QString &data)
 {
     QStringList linesContent = data.trimmed().split("=");
     if(linesContent.length() != 2)
         return QStringList("");
 
     QStringList needConvertedPaths;
-    if(libsConfigDontHasRungL(linesContent))
+    if(containsHasLibConfigAndDontHasRungL(linesContent)) {
         return needConvertedPaths;
+    }
 
     if(containsRungLPath(linesContent)) {
         return getBeConvertedRungLPath(linesContent);
     } else {
-        return getBeConvertedNormalPath(linesContent);
+        return removeAllFrontBlank(getBeConvertedNormalPath(linesContent));
     }
 }
 
@@ -54,7 +55,23 @@ bool ParseProConfig::isNeedConvert(const QString &waitConverted)
     return false;
 }
 
-bool ParseProConfig::libsConfigDontHasRungL(const QStringList &libConfig)
+QStringList ParseProConfig::removeAllFrontBlank(const QStringList &data)
+{
+    QStringList removeList;
+    for(int i=0;i<data.length();i++) {
+        removeList.append(removeFrontBlank(data.at(i)));
+    }
+    return removeList;
+}
+
+QString ParseProConfig::removeFrontBlank(const QString &data)
+{
+    QString removeResult = data;
+    removeResult.remove(QRegExp("^ +\\s*"));
+    return removeResult;
+}
+
+bool ParseProConfig::containsHasLibConfigAndDontHasRungL(const QStringList &libConfig)
 {
     if(libConfig.at(0).contains("LIBS") && !libConfig.at(1).contains("-L")) {
         return true;

@@ -42,7 +42,7 @@ TEST_F(TestConvertProToPri, splitKeywordAndPath)
 {
     QString beforeSplited = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\nActions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h \\\r\n");
     QStringList expectedConverted{"Actions/AutoOrient/Components/DentalModel/DentalModel.h ", "Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h "};
-    QStringList afterSplited = parseProConfig.getPathList(beforeSplited);
+    QStringList afterSplited = parseProConfig.getToBeConvertPathList(beforeSplited);
     ASSERT_THAT(afterSplited, Eq(expectedConverted));
 }
 
@@ -103,6 +103,15 @@ TEST_F(TestConvertProToPri, changeRC_ICONSConfig)
 {
     QString beforeConverted = QString("RC_ICONS += logo_icon.ico");
     QString expectedConverted = QString("RC_ICONS += $$PWD/Moonray/logo_icon.ico");
+
+    QString afterConverted = parseProConfig.convertOneConfig(beforeConverted);
+    ASSERT_THAT(afterConverted, Eq(expectedConverted));
+}
+
+TEST_F(TestConvertProToPri, convertSOURCESConfigWithBlankSpace)
+{
+    QString beforeConverted = QString("SOURCES += main.cpp \\\r\n    Actions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\nActions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.cpp \\\r\n");
+    QString expectedConverted = QString("SOURCES += $$PWD/Moonray/main.cpp \\\r\n    $$PWD/Moonray/Actions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\n$$PWD/Moonray/Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.cpp \\\r\n");
 
     QString afterConverted = parseProConfig.convertOneConfig(beforeConverted);
     ASSERT_THAT(afterConverted, Eq(expectedConverted));

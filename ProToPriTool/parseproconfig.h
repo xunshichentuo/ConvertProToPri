@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QString>
+#include <QDebug>
 
 class ParseProConfig : public QObject
 {
@@ -12,10 +13,12 @@ public:
     explicit ParseProConfig(QObject *parent = nullptr);
 
     QString convertOneConfig(const QString &waitConverted);
-    QStringList getPathList(const QString &data);
+    QStringList getToBeConvertPathList(const QString &data);
 private:
     bool isNeedConvert(const QString &waitConverted);
-    bool libsConfigDontHasRungL(const QStringList &libConfig);
+    QStringList removeAllFrontBlank(const QStringList &data);
+    QString removeFrontBlank(const QString &data);
+    bool containsHasLibConfigAndDontHasRungL(const QStringList &libConfig);
     bool containsRungLPath(const QStringList &configData);
     QStringList getBeConvertedRungLPath(const QStringList &configData);
     QStringList getBeConvertedNormalPath(const QStringList &configData);
