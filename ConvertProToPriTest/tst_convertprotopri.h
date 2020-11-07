@@ -41,7 +41,7 @@ TEST_F(TestConvertProToPri, convertQMAKE_INFO_PLIST)
 TEST_F(TestConvertProToPri, splitKeywordAndPath)
 {
     QString beforeSplited = QString("HEADERS += \\\r\nActions/AutoOrient/Components/DentalModel/DentalModel.h \\\r\nActions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h \\\r\n");
-    QStringList expectedConverted{"Actions/AutoOrient/Components/DentalModel/DentalModel.h ", "Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h "};
+    QStringList expectedConverted{"Actions/AutoOrient/Components/DentalModel/DentalModel.h", "Actions/AutoOrient/Components/SurgicalGuide/SurgicalGuide.h"};
     QStringList afterSplited = parseProConfig.getToBeConvertPathList(beforeSplited);
     ASSERT_THAT(afterSplited, Eq(expectedConverted));
 }

@@ -41,7 +41,7 @@ QStringList ParseProConfig::getToBeConvertPathList(const QString &data)
     if(containsRungLPath(linesContent)) {
         return getBeConvertedRungLPath(linesContent);
     } else {
-        return removeAllFrontBlank(getBeConvertedNormalPath(linesContent));
+        return removeAllSpace(getBeConvertedNormalPath(linesContent));
     }
 }
 
@@ -64,10 +64,26 @@ QStringList ParseProConfig::removeAllFrontBlank(const QStringList &data)
     return removeList;
 }
 
+QStringList ParseProConfig::removeAllSpace(const QStringList &data)
+{
+    QStringList removeList;
+    for(int i=0;i<data.length();i++) {
+        removeList.append(removeSpace(data.at(i)));
+    }
+    return removeList;
+}
+
 QString ParseProConfig::removeFrontBlank(const QString &data)
 {
     QString removeResult = data;
     removeResult.remove(QRegExp("^ +\\s*"));
+    return removeResult;
+}
+
+QString ParseProConfig::removeSpace(const QString &data)
+{
+    QString removeResult = data;
+    removeResult.remove(QRegExp("\\s"));
     return removeResult;
 }
 
@@ -98,9 +114,22 @@ QStringList ParseProConfig::getBeConvertedNormalPath(const QStringList &configDa
     return convertedList;
 }
 
-QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStringList toBeConvertList)
+QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, const QStringList &toBeConvertList)
 {
     QString converted = waitConverted;
+    QStringList convertedList = converted.split(" ");
+    convertedList.removeAll("");
+
+//    QStringList removeSpaceList;
+//    for(int i=0;i<toBeConvertList.length();i++) {
+//        QString oneCell = toBeConvertList.at(i);
+//        removeSpaceList.append(oneCell.remove(QRegExp("\\s")));
+//    }
+
+//    qDebug()<<"================================";
+//    qDebug()<<"convertedList:"<<convertedList;
+//    qDebug()<<"================================";
+//    qDebug()<<"toBeConvertList:"<<removeSpaceList;
     for(QString path : toBeConvertList) {
         converted.replace(path, getReplacePath(path));
     }
@@ -109,14 +138,13 @@ QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, QStr
 
 QString ParseProConfig::getReplacePath(const QString &path)
 {
-    QString pwdHead = "$$PWD/Moonray/";
     QString pwdKeyword = "$$PWD";
     QString pwdReplaceKeyWord = "$$PWD/Moonray";
     QString replacePath = path;
     if(replacePath.contains(pwdKeyword)) {
         replacePath.replace(pwdKeyword, pwdReplaceKeyWord);
     } else {
-        replacePath = pwdHead+path;
+        replacePath = pwdReplaceKeyWord + "/" + path;
     }
     return replacePath;
 }
