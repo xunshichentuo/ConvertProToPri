@@ -20,8 +20,13 @@ int main(int argc, char *argv[])
 
     QStringList configList = proFileReader.splitConfigFromData();
 
-    for(int i=0;i<configList.length();i++)
-        qDebug()<<"["<<i<<"]configList:"<<configList.at(i);
+    QFile waitForConverting("./waitConverted");
+    if(waitForConverting.open(QIODevice::WriteOnly)) {
+        for(int i=0;i<configList.length();i++) {
+            waitForConverting.write(configList.at(i).toLatin1());
+        }
+        waitForConverting.close();
+    }
 
 
     ParseProConfig parseProConfig;
@@ -31,8 +36,16 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    qDebug()<<"===========================================";
     for(int i=0;i<configList.length();i++) {
-        output.write(parseProConfig.convertOneConfig(configList.at(i)).toLatin1());
+        qDebug()<<"===========================================";
+        qDebug()<<"config.at("<<i<<"):"<<configList.at(i);
+        qDebug()<<"===========================================";
+        QString convertConfig = parseProConfig.convertOneConfig(configList.at(i));
+        qDebug()<<"===========================================";
+        qDebug()<<"convertConfig"<<i<<":"<<convertConfig;
+        QByteArray dataLine = convertConfig.toLatin1();
+        output.write(dataLine);
     }
     output.close();
 

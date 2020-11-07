@@ -22,6 +22,7 @@ QString ParseProConfig::convertOneConfig(const QString &waitConverted)
 
     if(isNeedConvert(waitConverted)) {
         QStringList pathList = getToBeConvertPathList(waitConverted);
+//        qDebug()<<"pathList:"<<pathList;
         converted = addPwdHeadPathInPaths(converted, pathList);
     }
     return converted;
