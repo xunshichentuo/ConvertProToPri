@@ -7,6 +7,7 @@ ProFileReader::ProFileReader(QObject *parent) : QObject(parent)
 
 void ProFileReader::loadOneRowOfData(const QString &rowData)
 {
+    qDebug()<<"tempStroageDataList.length()"<<tempStroageDataList.length()<<tempStroageDataList;
     tempStroageDataList.append(rowData);
 }
 
@@ -17,17 +18,24 @@ QStringList ProFileReader::getTempStroageDataList() const
 
 QStringList ProFileReader::splitConfigFromData()
 {
-    if(tempStroageDataList.length() < 1) return QStringList();
+    if(tempStroageDataList.length() < 1) {
+        qDebug()<<"tempStroageDataList.length() < 1";
+        return QStringList();
+    }
 
     QStringList configList;
     for(int i=0;i<tempStroageDataList.length();i++) {
+        qDebug()<<"i:"<<i<<tempStroageDataList.at(i);
         if(tempStroageDataList.at(i).contains("=")) {
             configList.append(tempStroageDataList.at(i));
         } else if(!tempStroageDataList.at(i).contains("=")
-                  && configList.last().contains("\\")){
+                  && (configList.length() >= 1) && configList.last().contains("\\")){
             if(configList.length() != 0) {
                 configList.last().append(tempStroageDataList.at(i));
             }
+        } else if(!tempStroageDataList.at(i).contains("=") &&
+                  tempStroageDataList.at(i).contains("#")) {
+            configList.append(tempStroageDataList.at(i));
         }
     }
     return configList;

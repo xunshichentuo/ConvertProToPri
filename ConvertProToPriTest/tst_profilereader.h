@@ -98,3 +98,28 @@ TEST_F(TestProfileReader, getEachConfigFromDataListWithBlankLine)
 
     ASSERT_THAT(afterConverted, Eq(expectEachConfig));
 }
+
+TEST_F(TestProfileReader, mustkeepComments)
+{
+    QString firstLine = QString("#Application version\r\n");
+    QString secondLine = QString("VERSION_MAJOR = 2\r\n");
+    QString thirdLine = QString("VERSION_MINOR = 6\r\n");
+    QString fourthLine = QString("VERSION_REVISION = 6\r\n");
+    QString fifthLine = QString("VERSION_BUILD = 1\r\n");
+
+    QStringList expectEachConfig;
+    expectEachConfig.append(firstLine);
+    expectEachConfig.append(secondLine);
+    expectEachConfig.append(thirdLine);
+    expectEachConfig.append(fourthLine);
+    expectEachConfig.append(fifthLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    proFileReader.loadOneRowOfData(fourthLine);
+    proFileReader.loadOneRowOfData(fifthLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
+
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}

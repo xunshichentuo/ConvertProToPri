@@ -19,7 +19,9 @@ int main(int argc, char *argv[])
     file.close();
 
     QStringList configList = proFileReader.splitConfigFromData();
-//    qDebug()<<"configList:"<<configList;
+
+    for(int i=0;i<configList.length();i++)
+        qDebug()<<"["<<i<<"]configList:"<<configList.at(i);
 
 
     ParseProConfig parseProConfig;
