@@ -44,17 +44,18 @@ void convertedToPri(const QString &dstPath, const QStringList &configList)
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-
-    if(argc != 2) {
+    if(argc != 3) {
         QFileInfo fileInfo(argv[0]);
         printUsage(fileInfo.fileName());
         return -1;
     }
 
-    ProFileReader proFileReader;
-    loadDataToProFileReader(argv[1], proFileReader);
-    convertedToPri(argv[1], proFileReader.splitConfigFromData());
+    QString srcFilePath(argv[1]);
+    QString dstFilePath(argv[2]);
 
-    return a.exec();
+    ProFileReader proFileReader;
+    loadDataToProFileReader(srcFilePath, proFileReader);
+    convertedToPri(dstFilePath, proFileReader.splitConfigFromData());
+
+    qDebug()<<QString("Conversion of file from [%1] to [%2] succeeded").arg(argv[1]).arg(argv[2]);
 }
