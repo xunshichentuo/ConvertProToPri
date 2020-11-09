@@ -13,7 +13,7 @@ HEADERS +=     \
     tst_profilereader.h \
     ../ProToPriTool/profilereader.h
 
-SOURCES +=     main.cpp \
+SOURCES +=     testmain.cpp \
     convertprotopri.cpp \
     ../ProToPriTool/parseproconfig.cpp \
     ../ProToPriTool/profilereader.cpp
