@@ -22,26 +22,17 @@ QStringList ProFileReader::splitConfigFromData()
         return QStringList();
     }
 
-    qDebug()<<"tempStroageDataList:"<<tempStroageDataList;
     QStringList configList;
     for(int i=0;i<tempStroageDataList.length();i++) {
         if(isTempStroageContainedEqualSign(i)) {
-//            qDebug()<<"isTempStroageContainedEqualSign:"<<tempStroageDataList.at(i);
             configList.append(tempStroageDataList.at(i));
         } else if(!isTempStroageContainedEqualSign(i)
-                  && isConfigListBeingAddedSubLine(configList)) {
-//            qDebug()<<"isConfigListBeingAddedSubLine:"<<tempStroageDataList.at(i);
+                  && isLastConfigFinished(configList)) {
             configList.last().append(tempStroageDataList.at(i));
         } else if(!isTempStroageContainedEqualSign(i) &&
                   isTempStroageNeedReserved(i)) {
-//            qDebug()<<"isTempStroageNeedReserved:"<<tempStroageDataList.at(i);
             configList.append(tempStroageDataList.at(i));
-        }/* else {
-            qDebug()<<"else:"<<tempStroageDataList.at(i)<<"=======";
-            qDebug()<<"isTempStroageContainedEqualSign(i):"<<isTempStroageContainedEqualSign(i);
-            qDebug()<<"isTempStroageNeedReserved:"<<isTempStroageNeedReserved(i);
-            qDebug()<<"===========================================";
-        }*/
+        }
     }
     return configList;
 }
@@ -65,18 +56,15 @@ bool ProFileReader::isEmptyLine(const QString &lineData)
     return reg.exactMatch(lineData);
 }
 
-bool ProFileReader::isConfigListBeingAddedSubLine(const QStringList &configList)
+bool ProFileReader::isLastConfigFinished(const QStringList &configList)
 {
     if(configList.length() < 1)
         return false;
 
-    QStringList lineLastList = configList.last().split("\r\n");
-    lineLastList.removeAll("");
-    if(lineLastList.last().contains("\\")) {
-        return true;
-    } else {
-        return false;
-    }
+    QStringList lastLineConfig = configList.last().split("\r\n");
+    lastLineConfig.removeAll("");
+    if(lastLineConfig.length() < 1) return false;
+    return (lastLineConfig.last().contains("\\"));
 }
 
 QVector<int> ProFileReader::getConfigStartIndex(const QStringList &data)

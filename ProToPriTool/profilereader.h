@@ -18,7 +18,7 @@ public:
     bool isTempStroageContainedEqualSign(const int &index);
     bool isTempStroageNeedReserved(const int &index);
     bool isEmptyLine(const QString &lineData);
-    bool isConfigListBeingAddedSubLine(const QStringList &configList);
+    bool isLastConfigFinished(const QStringList &configList);
     QVector<int> getConfigStartIndex(const QStringList &data);
     QStringList tempStroageDataList;
     QStringList configList;
