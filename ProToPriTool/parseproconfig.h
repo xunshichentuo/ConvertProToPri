@@ -23,6 +23,7 @@ private:
     QStringList getBeConvertedRungLPath(const QStringList &configData);
     QStringList getBeConvertedNormalPath(const QStringList &configData);
     QString addPwdHeadPathInPaths(const QString &waitConverted, const QStringList &toBeConvertList);
+    QVector<int> getStartPosSet(const QString &waitConverted, const QString &path);
     QString getReplacePath(const QString &path);
 
 private:
