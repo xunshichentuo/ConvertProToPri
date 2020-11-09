@@ -105,21 +105,9 @@ QString ParseProConfig::addPwdHeadPathInPaths(const QString &waitConverted, cons
 
         QVector<int> startPosSet;
         startPosSet = getStartPosSet(converted, path);
-
-
-        qDebug()<<"path:"<<path<<"|||||converted:"<<converted;
-        qDebug()<<"ParseProConfig::addPwdHeadPathInPaths replaceStartPos:"<<startPosSet;
-
-
         if(startPosSet.length() == 0) continue;
-        for(int i=0;i<startPosSet.length();i++) {
-            QChar charBeforeConverted = converted.at(startPosSet.at(i)-1);
-            qDebug()<<"charBeforeConverted:"<<charBeforeConverted;
-            if(charBeforeConverted == QChar(0x20) || charBeforeConverted == '\n' || charBeforeConverted == 'L')
-                converted.replace(startPosSet.at(i), path.length(), getReplacePath(path));
-        }
 
-//        converted.replace(path, getReplacePath(path));
+        converted = convertMatchingQString(converted, path, startPosSet);
     }
     return converted;
 }
@@ -135,6 +123,23 @@ QVector<int> ParseProConfig::getStartPosSet(const QString &waitConverted, const 
         startPosSet.append(replaceStartPos);
     }
     return startPosSet;
+}
+
+QString ParseProConfig::convertMatchingQString(const QString &waitConverted, const QString &matchingQString, QVector<int> &startPosSet)
+{
+    QString converted = waitConverted;
+    for(int i=0;i<startPosSet.length();i++) {
+        QChar characterBeforeConversion = converted.at(startPosSet.at(i)-1);
+        if(matchingQStringNeedToBeReplace(characterBeforeConversion))
+            converted.replace(startPosSet.at(i), matchingQString.length(), getReplacePath(matchingQString));
+    }
+
+    return converted;
+}
+
+bool ParseProConfig::matchingQStringNeedToBeReplace(const QChar &characterBeforeConversion)
+{
+    return characterBeforeConversion == QChar(0x20) || characterBeforeConversion == '\n' || characterBeforeConversion == 'L';
 }
 
 QString ParseProConfig::getReplacePath(const QString &path)
