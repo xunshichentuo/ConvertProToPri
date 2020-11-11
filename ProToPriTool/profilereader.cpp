@@ -7,7 +7,18 @@ ProFileReader::ProFileReader(QObject *parent) : QObject(parent)
 
 void ProFileReader::loadOneRowOfData(const QString &rowData)
 {
-    tempStroageDataList.append(rowData);
+    tempStroageDataList.append(filterUnwantedContent(rowData));
+}
+
+QString ProFileReader::filterUnwantedContent(const QString &rowData)
+{
+    QString inputData = rowData;
+    if(inputData.contains("main.cpp")) {
+        inputData.replace("main.cpp", "");
+    } else if(inputData.contains("TARGET")) {
+        inputData = "\r\n";
+    }
+    return inputData;
 }
 
 QStringList ProFileReader::getTempStroageDataList() const
@@ -26,12 +37,8 @@ QStringList ProFileReader::splitConfigFromData()
     for(int i=0;i<tempStroageDataList.length();i++) {
         if(isTempStroageContainedEqualSign(i)) {
             configList.append(tempStroageDataList.at(i));
-        } else if(!isTempStroageContainedEqualSign(i)
-                  && isLastConfigFinished(configList)) {
-            configList.last().append(tempStroageDataList.at(i));
-        } else if(!isTempStroageContainedEqualSign(i) &&
-                  isTempStroageNeedReserved(i)) {
-            configList.append(tempStroageDataList.at(i));
+        } else {
+            reserveNotContainedEqualSignLines(configList, i);
         }
     }
     return configList;
@@ -41,6 +48,15 @@ bool ProFileReader::isTempStroageContainedEqualSign(const int &index)
 {
     if(index >=0 && index >= tempStroageDataList.length()) return false;
     return tempStroageDataList.at(index).contains("=");
+}
+
+void ProFileReader::reserveNotContainedEqualSignLines(QStringList &configList, const int &index)
+{
+    if(isLastConfigFinished(configList)) {
+        configList.last().append(tempStroageDataList.at(index));
+    } else if(isTempStroageNeedReserved(index)) {
+        configList.append(tempStroageDataList.at(index));
+    }
 }
 
 bool ProFileReader::isTempStroageNeedReserved(const int &index)

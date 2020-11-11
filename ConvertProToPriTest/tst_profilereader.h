@@ -144,3 +144,38 @@ TEST_F(TestProfileReader, reserveCurlyBrackets)
     QStringList afterConverted = proFileReader.splitConfigFromData();
     ASSERT_THAT(afterConverted, Eq(expectEachConfig));
 }
+
+TEST_F(TestProfileReader, removeTargetKeywordLine)
+{
+    QString firstLine = QString("TARGET = RayWare\r\n");
+    QString secondLine = QString("win32 {\r\n");
+    QString thirdLine = QString("}\r\n");
+
+    QStringList expectEachConfig;
+    expectEachConfig.append("\r\n");
+    expectEachConfig.append(secondLine);
+    expectEachConfig.append(thirdLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}
+
+TEST_F(TestProfileReader, removeMainCppKeyword)
+{
+    QString firstLine = QString("SOURCES += main.cpp \\\r\n");
+    QString secondLine = QString("  Actions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\n");
+    QString thirdLine = QString("\r\n");
+
+    QStringList expectEachConfig;
+    QString expectedLine = QString("SOURCES +=  \\\r\n  Actions/AutoOrient/Components/DentalModel/DentalModel.cpp \\\r\n\r\n");
+    expectEachConfig.append(expectedLine);
+
+    proFileReader.loadOneRowOfData(firstLine);
+    proFileReader.loadOneRowOfData(secondLine);
+    proFileReader.loadOneRowOfData(thirdLine);
+    QStringList afterConverted = proFileReader.splitConfigFromData();
+    ASSERT_THAT(afterConverted, Eq(expectEachConfig));
+}
